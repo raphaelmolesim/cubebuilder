@@ -36,7 +36,7 @@ class CardController < ApplicationController
         color = item.colors.first.to_sym
       elsif item.colors.size == 0
         color = :Colorless
-      elsif item > 1
+      elsif item.colors.size > 1
         color = :Multicolor
       end
       

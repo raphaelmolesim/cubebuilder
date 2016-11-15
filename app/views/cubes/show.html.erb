@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @cube.name %>
+</p>
+
+<p>
+  <strong>Password:</strong>
+  <%= @cube.password %>
+</p>
+
+<%= link_to 'Edit', edit_cube_path(@cube) %> |
+<%= link_to 'Back', cubes_path %>

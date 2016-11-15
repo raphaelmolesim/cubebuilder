@@ -1,5 +1,7 @@
 class Card < ApplicationRecord
   
+  has_and_belongs_to_many :cubes
+  
   def colors=(value)
     raise TypeError, "Expected Array and got #{value.class}" if not value.nil? and value.class != Array
     self.colors_list = value.to_json

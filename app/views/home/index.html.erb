@@ -85,8 +85,24 @@ $(document).ready(function(){
 		if (uniqueness) 
 			cubeList.push(card_name);
 		
-		localStorage.setItem("cube_list", JSON.stringify(cubeList));
+		addCard(cubeList);
 	});
+	
+	function addCard(cubeList) {
+		localStorage.setItem("cube_list", JSON.stringify(cubeList));
+		$.ajax({
+		  method: "PUT",
+		  url: "/cubes/" + <%= session[:cube_id] %>,
+  		data: JSON.stringify( { cube : { cards : cubeList } }),
+      contentType: "application/json",
+			dataType: "json"
+		}).done(function() {
+			$("#card_list").html("");			
+		}).fail(function(e){
+			$("#card_list").html("Error trying to save cube!");
+		});
+		renderCube(cubeList);		
+	};
 	
 	var loadCube = function(cubeList) {
 		return $.ajax({
@@ -96,8 +112,8 @@ $(document).ready(function(){
 		});
 	};
 	
-	if (localStorage.cube_list != undefined)
-		loadCube(JSON.parse(localStorage.cube_list))
+	function renderCube(cubeList) {
+		loadCube(cubeList)
 		.done(function(response) {
 			json_response = JSON.parse(response);
 			spellsLenghts = [ 
@@ -126,9 +142,15 @@ $(document).ready(function(){
 			json_response["CreaturesMaxLength"] = creatureLenghts[0];
 			
 			text = HandlebarsTemplates['cards/cube'](json_response);
-			$("#cube").html(text);
+			$("#cube").html(text);	
 			
-		});
+		});	
+	}
+	
+	if (localStorage.cube_list != undefined)
+		renderCube(JSON.parse(localStorage.cube_list))
+		
+			
 	
 });
 

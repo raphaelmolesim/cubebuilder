@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161115110848) do
+ActiveRecord::Schema.define(version: 20161115152028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,22 @@ ActiveRecord::Schema.define(version: 20161115110848) do
     t.string   "colors_list"
     t.string   "types_list"
     t.string   "subtypes_list"
+  end
+
+  create_table "cards_cubes", force: :cascade do |t|
+    t.integer  "card_id"
+    t.integer  "cube_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_cards_cubes_on_card_id", using: :btree
+    t.index ["cube_id"], name: "index_cards_cubes_on_cube_id", using: :btree
+  end
+
+  create_table "cubes", force: :cascade do |t|
+    t.string   "name"
+    t.string   "password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
