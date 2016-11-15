@@ -1,0 +1,2 @@
+class Architype < ApplicationRecord
+end

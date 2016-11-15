@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Architypes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @architypes.each do |architype| %>
+      <tr>
+        <td><%= architype.name %></td>
+        <td><%= link_to 'Show', architype %></td>
+        <td><%= link_to 'Edit', edit_architype_path(architype) %></td>
+        <td><%= link_to 'Destroy', architype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Architype', new_architype_path %>

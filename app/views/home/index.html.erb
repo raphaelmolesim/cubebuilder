@@ -1,0 +1,33 @@
+<form id="search_card">
+	
+	<input type="text" name="card_name" id="card_name" >
+
+</form>
+
+<div id="card">
+	
+</div>
+
+
+<script>
+
+$(document).ready(function(){
+	
+	$("#search_card").on('submit', function(e) {
+		e.preventDefault();
+		card_name = $("#card_name").val();
+		$.ajax({
+		  method: "GET",
+		  url: "/card/search",
+  		data: { card_name : card_name }
+		}).done(function(response) {
+			text = HandlebarsTemplates['cards/show'](JSON.parse(response));
+			$("#card").html(text);
+  	});
+		
+	});
+	
+});
+
+
+</script>

@@ -1,0 +1,1 @@
+json.partial! "architypes/architype", architype: @architype

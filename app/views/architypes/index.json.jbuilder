@@ -1,0 +1,1 @@
+json.array! @architypes, partial: 'architypes/architype', as: :architype
