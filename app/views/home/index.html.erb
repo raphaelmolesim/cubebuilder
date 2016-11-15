@@ -13,14 +13,18 @@
 
 $(document).ready(function(){
 	
-	$("#search_card").on('submit', function(e) {
-		e.preventDefault();
-		card_name = $("#card_name").val();
-		$.ajax({
+	function getCardInfo(card_name){
+		return $.ajax({
 		  method: "GET",
 		  url: "/card/search",
   		data: { card_name : card_name }
-		}).done(function(response) {
+		});
+	}
+	
+	$("#search_card").on('submit', function(e) {
+		e.preventDefault();
+		card_name = $("#card_name").val();
+		getCardInfo(card_name).done(function(response) {
 			text = HandlebarsTemplates['cards/show'](JSON.parse(response));
 			$("#card_list").html(text);
   	});
@@ -43,6 +47,20 @@ $(document).ready(function(){
 		
 		localStorage.setItem("cube_list", JSON.stringify(cubeList));
 	});
+	
+	var loadCube = function(cubeList) {
+		cubeList.forEach(function(item) {
+			
+			getCardInfo(item).done(function(response) {
+				text = HandlebarsTemplates['cards/show'](JSON.parse(response));
+				$("#card_list").append(text);
+	  	});
+			
+		});
+	};
+	
+	if (localStorage.cube_list != undefined)
+		loadCube(JSON.parse(localStorage.cube_list));
 	
 });
 
