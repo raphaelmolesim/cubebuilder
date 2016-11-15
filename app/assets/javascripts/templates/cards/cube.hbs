@@ -9,34 +9,36 @@
 		<th>MultiColor</th>
 		<th>Land</th>
 	</tr>
-	{{#for 0 SpellsMaxLength 1 "Spells" }}
+	{{#cubeIterator 0 SpellsMaxLength 1 "Spells" }}
 	<tr>
 		<td>{{ @black }}</td>
 		<td>{{ @blue }}</td>
 		<td>{{ @red }}</td>
 		<td>{{ @white }}</td>
-		<td>{{ @gree }}</td>
+		<td>{{ @green }}</td>
 		<td>{{ @colorless }}</td>
 		<td>{{ @muilticolor }}</td>
 		<td>{{ @land }}</td>
 
 	</tr>
-	{{/for}}
+	{{/cubeIterator}}
 	
-	<tr></tr>
+	<tr>
+		<td colspan="8"></td>		
+	</tr>
 	
-	{{#for 0 CreaturesMaxLength 1 "Creatures" }}
+	{{#cubeIterator 0 CreaturesMaxLength 1 "Creatures" }}
 	<tr>
 		<td>{{ @black }}</td>
 		<td>{{ @blue }}</td>
 		<td>{{ @red }}</td>
 		<td>{{ @white }}</td>
-		<td>{{ @gree }}</td>
+		<td>{{ @green }}</td>
 		<td>{{ @colorless }}</td>
 		<td>{{ @muilticolor }}</td>
 		<td>{{ @land }}</td>
 
 	</tr>
-	{{/for}}
+	{{/cubeIterator}}
 </table>
 
