@@ -1,0 +1,42 @@
+<table border="0" cellspacing="5" cellpadding="5">
+	<tr>
+		<th>Black</th>
+		<th>Blue</th>
+		<th>Red</th>
+		<th>White</th>
+		<th>Green</th>
+		<th>Colorless</th>
+		<th>MultiColor</th>
+		<th>Land</th>
+	</tr>
+	{{#for 0 SpellsMaxLength 1 "Spells" }}
+	<tr>
+		<td>{{ @black }}</td>
+		<td>{{ @blue }}</td>
+		<td>{{ @red }}</td>
+		<td>{{ @white }}</td>
+		<td>{{ @gree }}</td>
+		<td>{{ @colorless }}</td>
+		<td>{{ @muilticolor }}</td>
+		<td>{{ @land }}</td>
+
+	</tr>
+	{{/for}}
+	
+	<tr></tr>
+	
+	{{#for 0 CreaturesMaxLength 1 "Creatures" }}
+	<tr>
+		<td>{{ @black }}</td>
+		<td>{{ @blue }}</td>
+		<td>{{ @red }}</td>
+		<td>{{ @white }}</td>
+		<td>{{ @gree }}</td>
+		<td>{{ @colorless }}</td>
+		<td>{{ @muilticolor }}</td>
+		<td>{{ @land }}</td>
+
+	</tr>
+	{{/for}}
+</table>
+

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  manaCost: MyString
+  cmc: 1
+  text: MyString
+  power: 1
+  toughtness: 1
+
+two:
+  name: MyString
+  manaCost: MyString
+  cmc: 1
+  text: MyString
+  power: 1
+  toughtness: 1

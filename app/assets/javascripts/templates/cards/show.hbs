@@ -1,28 +1,6 @@
 
 <div class="card">
-		<h3> <a href="#" class="add-card" data-id="{{ name }}">{{ name }}</a> - {{manaCost}} </h3>
+		<h3> <a href="#" class="add-card" data-id="{{ id }}">{{ name }}</a> - {{manaCost}} - {{ colors_list }} </h3>
 		<span> {{ type }} </span>
 		<p> {{ text }} </p>
 </div>
-
-<!-- 
-
-{
-	"Air Elemental": {
-		"layout": "normal",
-		"name": "Air Elemental",
-		"manaCost": "{3}{U}{U}",
-		"cmc": 5,
-		"colors": ["Blue"],
-		"type": "Creature — Elemental",
-		"types": ["Creature"],
-		"subtypes": ["Elemental"],
-		"text": "Flying",
-		"power": "4",
-		"toughness": "4",
-		"imageName": "air elemental",
-		"colorIdentity": ["U"]
-	}
-}
-
--->

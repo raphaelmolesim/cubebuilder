@@ -8,10 +8,46 @@
 	
 </div>
 
+<div id="cube">
+	
+</div>
+
 
 <script>
 
 $(document).ready(function(){
+	
+	Handlebars.registerHelper('json', function(context) {
+	    return JSON.stringify(context);
+	});
+	
+	function cubeSafeGet(cube, color, type, index) {		
+		if (type == null)
+			return cube[color][index] != null ? cube[color][type][index].name : "";
+		
+		return cube[color][type][index] != null ? cube[color][type][index].name : "";
+	}
+	
+	Handlebars.registerHelper('for', function(from, to, incr, type, block) {
+	    var accum = '';
+			data = Handlebars.createFrame(block.data);
+	    for(var i = from; i < to; i += incr) {
+				data.index = i;
+			
+				data.black = cubeSafeGet(this, "Black", "Spells", i)
+				data.blue = cubeSafeGet(this, "Blue", "Spells", i);
+				data.red = cubeSafeGet(this, "Red", "Spells", i);
+				data.white = cubeSafeGet(this, "White", "Spells", i);
+				data.green = cubeSafeGet(this, "Green", "Spells", i);
+				data.colorless = cubeSafeGet(this, "Colorless", "Spells", i);
+				data.multicolor = cubeSafeGet(this, "Multicolor", "Spells", i);
+				data.land = cubeSafeGet(this, "Land", null, i);
+
+	    	accum += block.fn(this, { data: data });					
+	    }
+	      
+	    return accum;
+	});
 	
 	function getCardInfo(card_name){
 		return $.ajax({
@@ -25,6 +61,9 @@ $(document).ready(function(){
 		e.preventDefault();
 		card_name = $("#card_name").val();
 		getCardInfo(card_name).done(function(response) {
+			if (response == "")
+				return $("#card_list").html("Not Found");
+				
 			text = HandlebarsTemplates['cards/show'](JSON.parse(response));
 			$("#card_list").html(text);
   	});
@@ -33,6 +72,7 @@ $(document).ready(function(){
 	
 	$("#card_list").on('click', $("a.add-card"), function(e) {
 		card_name = $(e.toElement).data("id");
+
 		cubeList = [];
 		if (localStorage.cube_list != undefined)
 			cubeList = JSON.parse(localStorage.cube_list);
@@ -49,18 +89,46 @@ $(document).ready(function(){
 	});
 	
 	var loadCube = function(cubeList) {
-		cubeList.forEach(function(item) {
-			
-			getCardInfo(item).done(function(response) {
-				text = HandlebarsTemplates['cards/show'](JSON.parse(response));
-				$("#card_list").append(text);
-	  	});
-			
+		return $.ajax({
+		  method: "GET",
+		  url: "/card/cube_load",
+  		data: { cards_ids : cubeList }
 		});
 	};
 	
 	if (localStorage.cube_list != undefined)
-		loadCube(JSON.parse(localStorage.cube_list));
+		loadCube(JSON.parse(localStorage.cube_list))
+		.done(function(response) {
+			json_response = JSON.parse(response);
+			spellsLenghts = [ 
+									json_response["Black"]["Spells"].length, 
+									json_response["Blue"]["Spells"].length,
+									json_response["Red"]["Spells"].length,
+									json_response["White"]["Spells"].length, 
+									json_response["Green"]["Spells"].length,
+									json_response["Colorless"]["Spells"].length,
+									json_response["Multicolor"]["Spells"].length
+								];
+								
+			creatureLenghts = [ 
+									json_response["Black"]["Creatures"].length, 
+									json_response["Blue"]["Creatures"].length,
+									json_response["Red"]["Creatures"].length,
+									json_response["White"]["Creatures"].length, 
+									json_response["Green"]["Creatures"].length,
+									json_response["Colorless"]["Creatures"].length,
+									json_response["Multicolor"]["Creatures"].length
+								];
+			spellsLenghts.sort(function(a, b){return b-a});
+			json_response["SpellsMaxLength"] = spellsLenghts[0];
+			
+			spellsLenghts.sort(function(a, b){return b-a});
+			json_response["CreaturesMaxLength"] = creatureLenghts[0];
+			
+			text = HandlebarsTemplates['cards/cube'](json_response);
+			$("#cube").html(text);
+			
+		});
 	
 });
 

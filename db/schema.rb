@@ -10,12 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114215019) do
+ActiveRecord::Schema.define(version: 20161115110848) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "architypes", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.string   "name"
+    t.string   "manaCost"
+    t.integer  "cmc"
+    t.string   "text"
+    t.integer  "power"
+    t.integer  "toughness"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "colors_list"
+    t.string   "types_list"
+    t.string   "subtypes_list"
   end
 
 end
