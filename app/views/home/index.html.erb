@@ -4,7 +4,7 @@
 
 </form>
 
-<div id="card">
+<div id="card_list">
 	
 </div>
 
@@ -22,9 +22,26 @@ $(document).ready(function(){
   		data: { card_name : card_name }
 		}).done(function(response) {
 			text = HandlebarsTemplates['cards/show'](JSON.parse(response));
-			$("#card").html(text);
+			$("#card_list").html(text);
   	});
 		
+	});
+	
+	$("#card_list").on('click', $("a.add-card"), function(e) {
+		card_name = $(e.toElement).data("id");
+		cubeList = [];
+		if (localStorage.cube_list != undefined)
+			cubeList = JSON.parse(localStorage.cube_list);
+		
+		uniqueness = true;
+		cubeList.forEach(function(item) {
+			uniqueness = uniqueness && item != card_name;
+		});
+		
+		if (uniqueness) 
+			cubeList.push(card_name);
+		
+		localStorage.setItem("cube_list", JSON.stringify(cubeList));
 	});
 	
 });
