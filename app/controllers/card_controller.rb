@@ -13,16 +13,8 @@ class CardController < ApplicationController
   
   def cube_load 
     cards_ids = params[:cards_ids]
-    cube = {
-      :Black => { :Spells => [], :Creatures => []},
-      :Blue => { :Spells => [], :Creatures => []},
-      :Red => { :Spells => [], :Creatures => []},
-      :White => { :Spells => [], :Creatures => []},
-      :Green => { :Spells => [], :Creatures => []},
-      :Colorless => { :Spells => [], :Creatures => []},
-      :Multicolor => { :Spells => [], :Creatures => []},
-      :Land => []
-    }
+    colors = [:Black, :Blue, :Red, :White, :Green, :Colorless, :Multicolor, :Land ]
+    cube = colors.inject({}) { |r, item| r[item] = { :Spells => [], :Creatures => []} ; r }
     
     Card.where(id: cards_ids).each do |item|
       color = nil
@@ -46,6 +38,8 @@ class CardController < ApplicationController
         cube[color][:Spells] << item
       end
     end
+    
+    cube.each { |color, map| map.each { |type, cards| cards.sort!{ |c1, c2| c1.cmc <=> c2.cmc } } }
     
     render text: cube.to_json
   end

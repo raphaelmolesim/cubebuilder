@@ -1,5 +1,6 @@
 <table border="0" cellspacing="5" cellpadding="5">
 	<tr>
+		<th>CMC</th>
 		<th>Black</th>
 		<th>Blue</th>
 		<th>Red</th>
@@ -11,6 +12,7 @@
 	</tr>
 	{{#cubeIterator 0 SpellsMaxLength 1 "Spells" }}
 	<tr>
+		<td></td>
 		<td>{{ @row.Black }}</td>
 		<td>{{ @row.Blue }}</td>
 		<td>{{ @row.Red }}</td>
@@ -29,6 +31,7 @@
 	
 	{{#cubeIterator 0 CreaturesMaxLength 1 "Creatures" }}
 	<tr>
+		<td></td>
 		<td>{{ @row.Black }}</td>
 		<td>{{ @row.Blue }}</td>
 		<td>{{ @row.Red }}</td>

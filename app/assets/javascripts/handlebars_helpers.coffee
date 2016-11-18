@@ -3,8 +3,14 @@ Handlebars.registerHelper 'json', (context) ->
 	
 cubeSafeGet = (cube, color, type, index) -> 
   if color == 'Land'
-    return if cube[color].length > index then cube[color][type][index].name else ''
-  if cube[color][type].length > index  then cube[color][type][index].name else ''
+    if cube[color].length > index
+      cube[color][type][index].name 
+    else 
+      ''
+  else if cube[color][type].length > index
+    new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][type][index]))
+  else
+    ''
 	
 Handlebars.registerHelper 'cubeIterator', (from, to, incr, type, block) ->
   html = ''

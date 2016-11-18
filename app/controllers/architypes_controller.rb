@@ -5,6 +5,11 @@ class ArchitypesController < ApplicationController
   # GET /architypes.json
   def index
     @architypes = Architype.all
+    
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @architypes }
+    end
   end
 
   # GET /architypes/1
