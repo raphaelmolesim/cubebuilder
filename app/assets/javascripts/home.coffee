@@ -8,17 +8,18 @@ $ ->
       url: '/card/search'
       data: card_name: card_name
   
-  addCard = (cubeList, cubeId) ->
-    localStorage.setItem 'cube_list', JSON.stringify(cubeList)
+  addCard = (cube_list, card_id, cube_id, architype_id) ->
+    cube_list.push card_id
+    localStorage.setItem 'cube_list', JSON.stringify(cube_list)
     $.ajax(
       method: 'PUT'
-      url: '/cubes/' + cubeId,
-      data: JSON.stringify(cube: cards: cubeList)
+      url: '/cubes/' + cube_id,
+      data: JSON.stringify(cube: cards: cube_list)
       contentType: 'application/json'
       dataType: 'json'
     ).done( ->
       $('#card_list').html ''
-      renderCube cubeList
+      renderCube cube_list
     ).fail (e) ->
       $('#card_list').html 'Error trying to save cube!'
   
@@ -26,7 +27,10 @@ $ ->
     getCardInfo(card_name).done (response) ->
       if response == ''
         return $('#card_list').html('Not Found')
-      text = HandlebarsTemplates['cards/show'](JSON.parse(response))
+      text = HandlebarsTemplates['cards/show'](
+        card: JSON.parse(response),
+        architypes: Window.architypes
+      )
       $('#card_list').html text
   
   $('#search_card').on 'submit', (e) ->
@@ -35,13 +39,13 @@ $ ->
     search_card card_name
   		
   $('#card_list').on 'click', 'a.add-card', (e) ->
-    card_id = $(e.toElement).data('id')
+    card_id = $(e.toElement).data('cardid')
     cubeList = []
     if localStorage.cube_list != undefined
       cubeList = JSON.parse(localStorage.cube_list)
     if not(card_id in cubeList)
-      cubeList.push card_id 
-      addCard cubeList, $("#cubeId").html()
+      architype_id = $(e.toElement).data('id') 
+      addCard cubeList, card_id, $("#cubeId").html(), architype_id
   
   loadCube = (cubeList) ->
     $.ajax
@@ -64,12 +68,14 @@ $ ->
   if localStorage.cube_list != undefined
     renderCube JSON.parse(localStorage.cube_list)
     
-  loadArchitypes = () ->
+  loadArchitypes = (doneFunc) ->
     $.ajax
       method: 'GET'
       url: '/architypes.json'
      .done (response )->
-       text = HandlebarsTemplates['cards/architype'](response)
-       $('#architypes').html text
+       Window.architypes = response
+       doneFunc(response)
        
-  loadArchitypes()
+  loadArchitypes (response) ->
+    text = HandlebarsTemplates['cards/architype'](response)
+    $('#architypes').html text

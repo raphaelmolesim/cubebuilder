@@ -1,7 +1,22 @@
 <div class="card">
-		<h3>
-			<a href="#" class="add-card" data-id="{{ id }}">{{ name }}</a> - {{manaCost}}
-		</h3>
-		<span> {{ types }} </span>
-		<p> {{ text }} </p>
+		<h4>
+      <div class="dropdown">
+  			<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+          {{ card.name }}
+        </a> - {{ card.manaCost }}
+      
+        <ul class="dropdown-menu">
+          {{#each architypes }}
+          <li>
+            <a href="#" class="add-card" data-id="{{ id }}" data-cardid="{{ ../card.id }}">
+              {{ name }}
+            </a>
+          </li>
+          {{/each }}
+        </ul>
+      </div>
+		</h4>
+		<span> {{ card.types }} </span>
+		<p> {{ card.text }} </p>
+    <p style="text-align: right">{{ card.power }} / {{ card.toughness }}</p>
 </div>
