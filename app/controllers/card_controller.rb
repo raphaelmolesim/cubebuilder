@@ -39,6 +39,10 @@ class CardController < ApplicationController
       
       if (item.types.include? "Land")
         cube[:Land] << item
+        summary[:Land] ||= 0
+        summary[:Land] += 1
+        summary[:Cards] ||= 0
+        summary[:Cards] += 1
         next
       end
       

@@ -4,7 +4,8 @@ Handlebars.registerHelper 'json', (context) ->
 cubeSafeGet = (cube, color, type, index) -> 
   if color == 'Land'
     if cube[color].length > index
-      cube[color][index].name 
+      new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][index]))
+      
     else 
       ''
   else if cube[color][type].length > index
