@@ -1,5 +1,15 @@
 class CardController < ApplicationController
   
+  def show
+    card = Card.where(id: params[:id]).first
+    
+    if card
+      render text: card.to_json
+    else
+      render text: ""
+    end
+  end
+  
   def search    
     card_name = params[:card_name]    
     card = Card.where(name: card_name).first    

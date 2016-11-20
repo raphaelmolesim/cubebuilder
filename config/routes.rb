@@ -2,9 +2,10 @@ Rails.application.routes.draw do
   get 'session/logout'
 
   resources :cubes
-  get 'card/search'
   get 'card/cube_load'
-
+  get 'card/search'
+  get '/card/:id', to: "card#show"
+  
   get 'home/index'
 
   resources :architypes

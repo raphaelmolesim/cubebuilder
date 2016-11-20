@@ -7,6 +7,11 @@ $ ->
       method: 'GET'
       url: '/card/search'
       data: card_name: card_name
+      
+  getCardInfoByID = (id) ->
+    $.ajax
+      method: 'GET'
+      url: "/card/#{id}.js"
   
   addCard = (cube_list, card_id, cube_id, architype_id) ->
     cube_list.push { id: card_id, architypes: [architype_id] }
@@ -38,7 +43,22 @@ $ ->
     e.preventDefault()
     card_name = $('#card_name').val()
     search_card card_name
-  		
+  
+  $('#cube').on 'click', 'a.show_card', (e) ->
+    card_id = $(e.toElement).data('id')
+    $.ajax
+      method: 'GET'
+      url: "/card/#{card_id}.js",
+      dataType: "json"
+    .done (response) ->
+      if response == ''
+        return $('#card_list').html('Not Found')  
+      text = HandlebarsTemplates['cards/show'](
+        card: response,
+        architypes: Window.architypes
+      )
+      $('#card_list').html text
+  
   $('#card_list').on 'click', 'a.add-card', (e) ->
     card_id = $(e.toElement).data('cardid')
     architype_id = $(e.toElement).data('id') 
