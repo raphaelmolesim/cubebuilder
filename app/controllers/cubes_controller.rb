@@ -1,6 +1,8 @@
 class CubesController < ApplicationController
   before_action :set_cube, only: [:show, :edit, :update, :destroy]
 
+  skip_before_filter :authenticate_user!
+
   # GET /cubes
   # GET /cubes.json
   def index
