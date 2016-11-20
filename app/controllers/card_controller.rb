@@ -12,10 +12,10 @@ class CardController < ApplicationController
   
   def search    
     card_name = params[:card_name]    
-    card = Card.search_by_name(card_name).first    
-    
-    if card
-      render text: card.to_json
+    cards = Card.search_by_name(card_name).to_a
+        
+    if not cards.empty?
+      render text: cards.to_json
     else
       render text: ""
     end

@@ -24,7 +24,15 @@
         </ul>
       </div>
 		</h4>
-		<span> {{ card.types }} </span>
-		<p> {{ card.text }} </p>
-    <p style="text-align: right">{{ card.power }} / {{ card.toughness }}</p>
+		<span>{{#each card.types_list }} {{ this }} {{/each}}</span>
+		<p>{{ card.text }} </p>
+    {{#if card.power }}<p style="text-align: right">{{ card.power }} / {{ card.toughness }}</p>{{/if}}
 </div>
+{{#if others }}
+  Other results:
+  <ul>
+  {{#each others }}
+    <li><a href="#" class="show_card" data-id="{{ id }}">{{ name }}</li>
+  </ul>
+  {{/each}}
+{{/if }}

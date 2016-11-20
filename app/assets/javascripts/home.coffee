@@ -33,9 +33,12 @@ $ ->
     getCardInfo(card_name).done (response) ->
       if response == ''
         return $('#card_list').html('Not Found')
+      result = JSON.parse(response)
+      result.forEach (c) -> c["types_list"] = JSON.parse(c["types_list"])
       text = HandlebarsTemplates['cards/show'](
-        card: JSON.parse(response),
-        architypes: Window.architypes
+        card: result[0],
+        architypes: Window.architypes,
+        others: result.filter (c) -> c["id"] != result[0]["id"]
       )
       $('#card_list').html text
   
@@ -43,6 +46,23 @@ $ ->
     e.preventDefault()
     card_name = $('#card_name').val()
     search_card card_name
+  
+  $('#card_list').on 'click', 'a.show_card', (e) ->
+    console.log("Work")
+    card_id = $(e.toElement).data('id')
+    $.ajax
+      method: 'GET'
+      url: "/card/#{card_id}.js",
+      dataType: "json"
+    .done (response) ->
+      if response == ''
+        return $('#card_list').html('Not Found')  
+      response["types_list"] = JSON.parse(response["types_list"])
+      text = HandlebarsTemplates['cards/show'](
+        card: response,
+        architypes: Window.architypes
+      )
+      $('#card_list').html text
   
   $('#cube').on 'click', 'a.show_card', (e) ->
     card_id = $(e.toElement).data('id')
@@ -53,6 +73,7 @@ $ ->
     .done (response) ->
       if response == ''
         return $('#card_list').html('Not Found')  
+      response["types_list"] = JSON.parse(response["types_list"])
       text = HandlebarsTemplates['cards/show'](
         card: response,
         architypes: Window.architypes
