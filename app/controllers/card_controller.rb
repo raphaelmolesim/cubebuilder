@@ -23,8 +23,9 @@ class CardController < ApplicationController
   
   def cube_load 
 
-    colors = [:Black, :Blue, :Red, :White, :Green, :Colorless, :Multicolor, :Land ]
+    colors = [:Black, :Blue, :Red, :White, :Green, :Colorless, :Multicolor ]
     cube = colors.inject({}) { |r, item| r[item] = { :Spells => [], :Creatures => []} ; r }
+    cube[:Land] = []
     summary = { Spells: {}, Creatures: {} }
     repetition = []
     
@@ -66,7 +67,7 @@ class CardController < ApplicationController
       
     end
     
-    cube.each { |color, map| map.each { |type, cards| cards.sort!{ |c1, c2| c1.cmc <=> c2.cmc } } }
+    cube.each { |color, map| map.each { |type, cards| cards.sort!{ |c1, c2| c1.cmc <=> c2.cmc } } if color != :Land }
     cube[:Total] = summary
     
     render text: cube.to_json

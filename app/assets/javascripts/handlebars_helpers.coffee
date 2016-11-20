@@ -4,7 +4,7 @@ Handlebars.registerHelper 'json', (context) ->
 cubeSafeGet = (cube, color, type, index) -> 
   if color == 'Land'
     if cube[color].length > index
-      cube[color][type][index].name 
+      cube[color][index].name 
     else 
       ''
   else if cube[color][type].length > index
