@@ -139,8 +139,18 @@ $ ->
       text = HandlebarsTemplates['cards/cube'](json_response)
       $('#cube').html text
   
+  restoreCube = ->
+    $.ajax
+      method: 'GET'
+      url: '/home/restore_LocalStorage'
+    .done (response) ->
+      localStorage.setItem 'cube_list', response
+      renderCube()
+  
   if localStorage.cube_list != undefined
     renderCube JSON.parse(localStorage.cube_list)
+  else
+    restoreCube()
     
   loadArchitypes = ->
     $.ajax
