@@ -2,6 +2,10 @@ class Card < ApplicationRecord
   
   has_many :selected_cards
   
+  include PgSearch
+  
+  pg_search_scope :search_by_name, :against => :name, :using => { :tsearch => {:prefix => true} }
+  
   def colors=(value)
     raise TypeError, "Expected Array and got #{value.class}" if not value.nil? and value.class != Array
     self.colors_list = value.to_json

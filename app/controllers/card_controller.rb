@@ -12,7 +12,7 @@ class CardController < ApplicationController
   
   def search    
     card_name = params[:card_name]    
-    card = Card.where(name: card_name).first    
+    card = Card.search_by_name(card_name).first    
     
     if card
       render text: card.to_json
