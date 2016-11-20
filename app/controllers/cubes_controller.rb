@@ -41,8 +41,9 @@ class CubesController < ApplicationController
   # PATCH/PUT /cubes/1.json
   def update
     respond_to do |format|
-      cards = Card.where(id: cube_params[:cards]) if (params[:cube][:cards])
-      if @cube.update!(cards: cards)
+      cube = Cube.find(params[:id])
+      
+      if cube.sync_all_cube(params[:cube][:cards])
         format.html { redirect_to @cube, notice: 'Cube was successfully updated.' }
         format.json { render :show, status: :ok, location: @cube }
       else

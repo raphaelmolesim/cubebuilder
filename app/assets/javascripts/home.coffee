@@ -9,7 +9,7 @@ $ ->
       data: card_name: card_name
   
   addCard = (cube_list, card_id, cube_id, architype_id) ->
-    cube_list.push card_id
+    cube_list.push { id: card_id, architypes: [architype_id] }
     localStorage.setItem 'cube_list', JSON.stringify(cube_list)
     $.ajax(
       method: 'PUT'
@@ -20,6 +20,7 @@ $ ->
     ).done( ->
       $('#card_list').html ''
       renderCube cube_list
+      loadArchitypes()
     ).fail (e) ->
       $('#card_list').html 'Error trying to save cube!'
   
@@ -40,18 +41,23 @@ $ ->
   		
   $('#card_list').on 'click', 'a.add-card', (e) ->
     card_id = $(e.toElement).data('cardid')
+    architype_id = $(e.toElement).data('id') 
     cubeList = []
     if localStorage.cube_list != undefined
       cubeList = JSON.parse(localStorage.cube_list)
-    if not(card_id in cubeList)
-      architype_id = $(e.toElement).data('id') 
+    cards = cubeList.map (c) -> c.architypes.map (a) -> "#{c.id}&#{a}"
+    console.log([].concat.apply([], cards))
+    console.log("#{card_id}&#{architype_id}")
+    if not("#{card_id}&#{architype_id}" in [].concat.apply([], cards))
       addCard cubeList, card_id, $("#cubeId").html(), architype_id
-  
+    else
+      $('#card_list').html "Already in the cube!"
+        
   loadCube = (cubeList) ->
     $.ajax
       method: 'GET'
       url: '/card/cube_load'
-      data: cards_ids: cubeList
+      data: id: parseInt($("#cubeId").html())
   
   renderCube = (cubeList) ->
     loadCube(cubeList).done (response) ->
@@ -68,14 +74,13 @@ $ ->
   if localStorage.cube_list != undefined
     renderCube JSON.parse(localStorage.cube_list)
     
-  loadArchitypes = (doneFunc) ->
+  loadArchitypes = ->
     $.ajax
       method: 'GET'
       url: '/architypes.json'
      .done (response )->
        Window.architypes = response
-       doneFunc(response)
+       text = HandlebarsTemplates['cards/architype'](response)
+       $('#architypes').html text
        
-  loadArchitypes (response) ->
-    text = HandlebarsTemplates['cards/architype'](response)
-    $('#architypes').html text
+  loadArchitypes() 

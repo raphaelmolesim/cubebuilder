@@ -12,11 +12,18 @@ class CardController < ApplicationController
   end
   
   def cube_load 
-    cards_ids = params[:cards_ids]
+
     colors = [:Black, :Blue, :Red, :White, :Green, :Colorless, :Multicolor, :Land ]
     cube = colors.inject({}) { |r, item| r[item] = { :Spells => [], :Creatures => []} ; r }
     
-    Card.where(id: cards_ids).each do |item|
+    repetition = []
+    
+    SelectedCard.where(cube_id: params[:id]).each do |selected_card|
+      next if (repetition.include? selected_card.card_id)
+      
+      repetition << selected_card.card_id
+      item = selected_card.card
+      
       color = nil
       
       if (item.types.include? "Land")

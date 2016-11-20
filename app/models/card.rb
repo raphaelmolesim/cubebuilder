@@ -1,6 +1,6 @@
 class Card < ApplicationRecord
   
-  has_and_belongs_to_many :cubes
+  has_many :selected_cards
   
   def colors=(value)
     raise TypeError, "Expected Array and got #{value.class}" if not value.nil? and value.class != Array

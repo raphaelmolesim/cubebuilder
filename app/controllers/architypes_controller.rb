@@ -4,7 +4,7 @@ class ArchitypesController < ApplicationController
   # GET /architypes
   # GET /architypes.json
   def index
-    @architypes = Architype.all
+    @architypes = Architype.eager_load(:selected_cards).all
     
     respond_to do |format|
       format.html { render :index }
