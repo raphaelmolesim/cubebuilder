@@ -56,8 +56,35 @@ $ ->
       text = HandlebarsTemplates['cards/show'](
         card: response,
         architypes: Window.architypes
+        delete_option: true
       )
       $('#card_list').html text
+  
+  removeCard = (cube_id, cube_list, card_id) ->
+    console.log(" --> #{card_id} ")
+    cube_list = cube_list.filter (item) -> 
+        item.id != card_id;    
+    localStorage.setItem 'cube_list', JSON.stringify(cube_list)
+    $.ajax(
+      method: 'PUT'
+      url: '/cubes/' + cube_id,
+      data: JSON.stringify(cube: cards: cube_list)
+      contentType: 'application/json'
+      dataType: 'json'
+    ).done( ->
+      $('#card_list').html ''
+      renderCube cube_list
+      loadArchitypes()
+    ).fail (e) ->
+      $('#card_list').html 'Error trying to save cube!'
+  
+  $('#card_list').on 'click', 'a.remove-card', (e) ->
+    cube_list = JSON.parse(localStorage.cube_list)
+    card_id = $(e.toElement).data('cardid')
+    cube_id = $("#cubeId").html()
+    removeCard(cube_id, cube_list, card_id).done ->
+      renderCube(cube_list)
+      $('#card_list').html "Removed from group"
   
   $('#card_list').on 'click', 'a.add-card', (e) ->
     card_id = $(e.toElement).data('cardid')

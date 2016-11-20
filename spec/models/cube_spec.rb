@@ -68,6 +68,16 @@ describe Cube, :type => :model do
       expect(result).to be(true)
       expect(SelectedCard.all.size).to be(2)
     end
+    
+    it "update cube with one card that already exists and reset it" do
+      selected_card = create(:selected_card)
+      cube = selected_card.cube
+      
+      result = cube.sync_all_cube [  ]
+      
+      expect(result).to be(true)
+      expect(SelectedCard.all.size).to be(0)
+    end
         
   end
 
