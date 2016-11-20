@@ -25,7 +25,7 @@ class CardController < ApplicationController
 
     colors = [:Black, :Blue, :Red, :White, :Green, :Colorless, :Multicolor, :Land ]
     cube = colors.inject({}) { |r, item| r[item] = { :Spells => [], :Creatures => []} ; r }
-    
+    summary = { Spells: {}, Creatures: {} }
     repetition = []
     
     SelectedCard.where(cube_id: params[:id]).each do |selected_card|
@@ -50,13 +50,24 @@ class CardController < ApplicationController
       end
       
       if item.types.include? "Creature"
+        summary[:Creatures][color] ||= 0
+        summary[:Creatures][color] += 1
         cube[color][:Creatures] << item
       else
+        summary[:Spells][color] ||= 0
+        summary[:Spells][color] += 1
         cube[color][:Spells] << item
       end
+      
+      summary[color] ||= 0
+      summary[color] += 1
+      summary[:Cards] ||= 0
+      summary[:Cards] += 1
+      
     end
     
     cube.each { |color, map| map.each { |type, cards| cards.sort!{ |c1, c2| c1.cmc <=> c2.cmc } } }
+    cube[:Total] = summary
     
     render text: cube.to_json
   end
