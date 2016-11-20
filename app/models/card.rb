@@ -12,6 +12,9 @@ class Card < ApplicationRecord
   end
   
   def colors
+    if self.colors_list == "null"
+      return []
+    end
     JSON self.colors_list
   end
   
