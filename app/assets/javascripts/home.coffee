@@ -125,11 +125,15 @@ $ ->
     el = $(e.toElement)  
     architype_id = parseInt(el.data('id'))
     cubeList = JSON.parse(localStorage.cube_list)
-    list = []
+    list = {}
     cubeList.forEach (card) ->
       if (architype_id in card["architypes"])
-        card_name = $("a.show_card[data-id=#{card["id"]}]").html()
-        list.push(card_name)
+        cell = $("a.show_card[data-id=#{card["id"]}]")
+        card_name = cell.html()
+        cmc = cell.next().html()
+        if cmc == undefined
+          cmc = 0
+        list[cmc] = card_name
     Window.element = HandlebarsTemplates['architypes/list']    
     text = HandlebarsTemplates['architypes/list']({ architype: el.html(), cards: list })
     $('#dialog').html text
