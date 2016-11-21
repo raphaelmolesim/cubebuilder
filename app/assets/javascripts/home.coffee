@@ -120,6 +120,20 @@ $ ->
       addCard cubeList, card_id, $("#cubeId").html(), architype_id
     else
       $('#card_list').html "Already in the cube!"
+  
+  $('#architypes').on 'click', 'a.list-architype', (e) ->  
+    el = $(e.toElement)  
+    architype_id = parseInt(el.data('id'))
+    cubeList = JSON.parse(localStorage.cube_list)
+    list = []
+    cubeList.forEach (card) ->
+      if (architype_id in card["architypes"])
+        card_name = $("a.show_card[data-id=#{card["id"]}]").html()
+        list.push(card_name)
+    Window.element = HandlebarsTemplates['architypes/list']    
+    text = HandlebarsTemplates['architypes/list']({ architype: el.html(), cards: list })
+    $('#dialog').html text
+    $('#architype_list').modal({})
         
   loadCube = (cubeList) ->
     $.ajax
