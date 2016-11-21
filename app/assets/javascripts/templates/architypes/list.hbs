@@ -6,9 +6,12 @@
         <h4 class="modal-title">{{ architype }}</h4>
       </div>
       <div class="modal-body">
-       <ul>
+       <ul style="list-style:none">
        {{#each cards}}
-         <li style="list-style:none">{{ @key }} - {{ this }}</li>
+         <li>{{ @key }}</li>
+         {{#each this}}
+         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ this }}</li>
+         {{/each}}
        {{/each}}
        <ul>
       </div>

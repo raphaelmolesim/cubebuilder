@@ -133,7 +133,8 @@ $ ->
         cmc = cell.next().html()
         if cmc == undefined
           cmc = 0
-        list[cmc] = card_name
+        list[cmc] ||= []
+        list[cmc].push(card_name)
     Window.element = HandlebarsTemplates['architypes/list']    
     text = HandlebarsTemplates['architypes/list']({ architype: el.html(), cards: list })
     $('#dialog').html text
