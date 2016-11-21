@@ -144,7 +144,7 @@ $ ->
       method: 'GET'
       url: '/home/restore_LocalStorage'
     .done (response) ->
-      localStorage.setItem 'cube_list', response
+      localStorage.setItem 'cube_list', JSON.stringify(response)
       renderCube()
   
   if localStorage.cube_list != undefined
