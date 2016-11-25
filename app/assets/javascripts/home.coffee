@@ -114,8 +114,6 @@ $ ->
     if localStorage.cube_list != undefined
       cubeList = JSON.parse(localStorage.cube_list)
     cards = cubeList.map (c) -> c.architypes.map (a) -> "#{c.id}&#{a}"
-    console.log([].concat.apply([], cards))
-    console.log("#{card_id}&#{architype_id}")
     if not("#{card_id}&#{architype_id}" in [].concat.apply([], cards))
       addCard cubeList, card_id, $("#cubeId").html(), architype_id
     else
@@ -125,18 +123,26 @@ $ ->
     el = $(e.toElement)  
     architype_id = parseInt(el.data('id'))
     cubeList = JSON.parse(localStorage.cube_list)
-    list = {}
+    list_cmc = {}
+    list_type = { "Creatures" : [], "Spells" : [], "Lands" : [] }
     cubeList.forEach (card) ->
       if (architype_id in card["architypes"])
         cell = $("a.show_card[data-id=#{card["id"]}]")
         card_name = cell.html()
         cmc = cell.next().html()
+        type = cell.data("type")
         if cmc == undefined
           cmc = 0
-        list[cmc] ||= []
-        list[cmc].push(card_name)
-    Window.element = HandlebarsTemplates['architypes/list']    
-    text = HandlebarsTemplates['architypes/list']({ architype: el.html(), cards: list })
+        list_cmc[cmc] ||= []
+        list_cmc[cmc].push(card_name)
+        console.log(type)
+        if ("Creature" in type)
+          list_type["Creatures"].push(card_name)
+        else if ("Land" in type)
+          list_type["Lands"].push(card_name)
+        else
+          list_type["Spells"].push(card_name)
+    text = HandlebarsTemplates['architypes/list']({ architype: el.html(), cards_by_cmc: list_cmc, cards_by_type: list_type })
     $('#dialog').html text
     $('#architype_list').modal({})
         
