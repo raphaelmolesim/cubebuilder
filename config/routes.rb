@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'session/logout'
 
+  get 'cubes/wishlist'
+  post 'cubes/set_wishlist'
   resources :cubes
   resources :architypes
   get 'card/cube_load'

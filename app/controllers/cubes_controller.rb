@@ -64,6 +64,31 @@ class CubesController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def set_wishlist  
+    @cube = Cube.find(session[:cube_id])
+    card = Card.find(params[:card_id])
+    item = Wishlist.where(cube_id: @cube.id, card_id: card.id).first
+    remove = params[:remove] == 'true'
+    create = (not item and not remove)
+    puts "====> #{item} params:#{remove}  #{create} #{(not item)} #{(not remove)} "
+    if (item and remove)
+      item.delete
+    elsif (not item and not remove)
+      Wishlist.create! cube: @cube, card: card
+    end
+    respond_to do |format|
+      format.json { render :show, status: :ok, location: @cube }
+    end    
+  end
+  
+  def wishlist
+    @cube = Cube.find(session[:cube_id])
+    wishlist = @cube.wishlists.map(&:card_id)
+    respond_to do |format|
+      format.json { render json: wishlist, tatus: :ok }
+    end     
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

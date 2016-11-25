@@ -4,11 +4,13 @@ Handlebars.registerHelper 'json', (context) ->
 cubeSafeGet = (cube, color, type, index) -> 
   if color == 'Land'
     if cube[color].length > index
-      Window.element = cube[color][index]["types_list"]
       new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][index]))      
     else 
       ''
   else if cube[color][type].length > index
+    if (cube[color][type][index] != undefined and cube[color][type][index] != null)
+      id = cube[color][type][index]["id"]
+      cube[color][type][index]["wishlist"] = (id in Window.wishlist)
     new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][type][index]))
   else
     ''

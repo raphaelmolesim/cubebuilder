@@ -27,6 +27,9 @@
 		<span>{{#each card.types_list }} {{ this }} {{/each}}</span>
 		<p>{{ card.text }} </p>
     {{#if card.power }}<p style="text-align: right">{{ card.power }} / {{ card.toughness }}</p>{{/if}}
+    
+    <input type="checkbox" data-id="{{ card.id }}" class="add-wishlist">&nbsp;Add to wishlist</label>
+    
 </div>
 {{#if others }}
   Other results:

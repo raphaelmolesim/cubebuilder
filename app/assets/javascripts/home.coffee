@@ -119,6 +119,27 @@ $ ->
     else
       $('#card_list').html "Already in the cube!"
   
+  addToWishlist = (card_id, remove) ->
+    $.ajax
+      method: 'POST'
+      url: '/cubes/set_wishlist'
+      data: { "card_id" : card_id, "remove" : remove }
+      dataType: 'json'
+  
+  $('#card_list').on 'change', '.add-wishlist', (e) ->
+    console.log(e)
+    card_id = $(e.target).data('id')
+    remove = not this.checked
+    console.log("Raised Event!!! Card Id: #{card_id} Remove: #{remove}")
+    addToWishlist(card_id, remove)
+    .done (response) ->
+      cell = $("a.show_card[data-id=#{card_id}]")
+      if (remove)
+        cell.removeClass("wishlist")
+      else
+        cell.addClass("wishlist")
+    
+    
   $('#architypes').on 'click', 'a.list-architype', (e) ->  
     el = $(e.toElement)  
     architype_id = parseInt(el.data('id'))
@@ -135,7 +156,6 @@ $ ->
           cmc = 0
         list_cmc[cmc] ||= []
         list_cmc[cmc].push(card_name)
-        console.log(type)
         if ("Creature" in type)
           list_type["Creatures"].push(card_name)
         else if ("Land" in type)
@@ -154,15 +174,16 @@ $ ->
   
   renderCube = (cubeList) ->
     loadCube(cubeList).done (response) ->
-      json_response = JSON.parse(response)
-      colors_without_lands = window.Colors[0..(window.Colors.length - 2)]
-      spellsLenghts = (json_response[c]['Spells'].length for c in colors_without_lands)
-      creatureLenghts = (json_response[c]['Creatures'].length for c in colors_without_lands)
-      array.sort((a, b) -> b - a) for array in [creatureLenghts, spellsLenghts]
-      json_response['SpellsMaxLength'] = spellsLenghts[0]
-      json_response['CreaturesMaxLength'] = creatureLenghts[0]
-      text = HandlebarsTemplates['cards/cube'](json_response)
-      $('#cube').html text
+      loadWishlist ->
+        json_response = JSON.parse(response)
+        colors_without_lands = window.Colors[0..(window.Colors.length - 2)]
+        spellsLenghts = (json_response[c]['Spells'].length for c in colors_without_lands)
+        creatureLenghts = (json_response[c]['Creatures'].length for c in colors_without_lands)
+        array.sort((a, b) -> b - a) for array in [creatureLenghts, spellsLenghts]
+        json_response['SpellsMaxLength'] = spellsLenghts[0]
+        json_response['CreaturesMaxLength'] = creatureLenghts[0]
+        text = HandlebarsTemplates['cards/cube'](json_response)
+        $('#cube').html text
   
   restoreCube = ->
     $.ajax
@@ -185,5 +206,14 @@ $ ->
        Window.architypes = response
        text = HandlebarsTemplates['cards/architype'](response)
        $('#architypes').html text
+  
+  loadWishlist = (func) ->
+    $.ajax
+      method: 'GET'
+      url: '/cubes/wishlist'
+      data: id: parseInt($("#cubeId").html())
+     .done (response )->
+       Window.wishlist = response
+       func.call()
        
   loadArchitypes() 

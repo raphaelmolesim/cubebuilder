@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161119221723) do
+ActiveRecord::Schema.define(version: 20161125205616) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 20161119221723) do
     t.index ["card_id", "cube_id", "architype_id"], name: "index_selected_cards_on_card_id_and_cube_id_and_architype_id", unique: true, using: :btree
     t.index ["card_id"], name: "index_selected_cards_on_card_id", using: :btree
     t.index ["cube_id"], name: "index_selected_cards_on_cube_id", using: :btree
+  end
+
+  create_table "wishlists", force: :cascade do |t|
+    t.integer  "card_id"
+    t.integer  "cube_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["card_id"], name: "index_wishlists_on_card_id", using: :btree
+    t.index ["cube_id"], name: "index_wishlists_on_cube_id", using: :btree
   end
 
 end

@@ -2,6 +2,9 @@ class Cube < ApplicationRecord
   
   has_many :selected_cards
   
+  has_many :wishlists 
+  has_many :cubes, through: :wishlists 
+  
   def sync_all_cube cube_list
     current_cards = selected_cards.to_a
     

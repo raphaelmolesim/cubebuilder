@@ -2,6 +2,9 @@ class Card < ApplicationRecord
   
   has_many :selected_cards
   
+  has_many :wishlists 
+  has_many :cubes, through: :wishlists
+    
   include PgSearch
   
   pg_search_scope :search_by_name, :against => :name, :using => { :tsearch => {:prefix => true} }
