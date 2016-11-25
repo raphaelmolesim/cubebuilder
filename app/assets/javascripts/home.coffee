@@ -165,6 +165,18 @@ $ ->
     text = HandlebarsTemplates['architypes/list']({ architype: el.html(), cards_by_cmc: list_cmc, cards_by_type: list_type })
     $('#dialog').html text
     $('#architype_list').modal({})
+  
+  $("#show_wishlist").click ->
+    wishlist = []
+    Window.wishlist.forEach (id) ->
+      cell = $("a.show_card[data-id=#{id}]")
+      card_name = cell.html()
+      console.log(card_name)
+      wishlist.push(card_name)
+    text = HandlebarsTemplates['cards/wishlist']({ wishlist:  wishlist})
+    $('#dialog').html text
+    $('#wishlist').modal({})
+    
         
   loadCube = (cubeList) ->
     $.ajax
@@ -216,4 +228,4 @@ $ ->
        Window.wishlist = response
        func.call()
        
-  loadArchitypes() 
+    loadArchitypes() 
