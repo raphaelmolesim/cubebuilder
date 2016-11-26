@@ -205,10 +205,7 @@ $ ->
       localStorage.setItem 'cube_list', JSON.stringify(response)
       renderCube()
   
-  if localStorage.cube_list != undefined
-    renderCube JSON.parse(localStorage.cube_list)
-  else
-    restoreCube()
+  restoreCube()
     
   loadArchitypes = ->
     $.ajax
