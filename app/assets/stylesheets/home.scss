@@ -5,3 +5,12 @@ div.container{
 .wishlist {
   font-weight: bold;
 }
+
+ul#architypes {
+  width: 100%;
+  li {
+    width: 35%;
+    float: left;
+    margin-left: 20px;
+  }
+}
