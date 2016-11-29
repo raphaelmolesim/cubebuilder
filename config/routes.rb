@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'session/logout'
+  get 'home/row_data'
 
   get 'cubes/wishlist'
   post 'cubes/set_wishlist'

@@ -1,11 +1,12 @@
 class HomeController < ApplicationController
   def index
   end
+
+  def row_data
+    @selected_cards = Cube.find(session[:cube_id]).selected_cards
+  end
   
   def restore_LocalStorage
-    without_archetype = SelectedCard.all.select { |s| s.architype.nil? }
-    puts "====> #{without_archetype.size} / #{SelectedCard.all.size} <===="
-
     selected_cards = Cube.find(session[:cube_id]).selected_cards
     
     localStorage = []
@@ -13,8 +14,6 @@ class HomeController < ApplicationController
     selected_cards.each do |item|
       card = item.card
       obj = localStorage.detect { |c| c[:id] == card.id }
-      puts "====> #{card} #{item}"
-      puts "----> #{item.architype}"
       if obj
         obj[:architypes] << item.architype.id
       else
