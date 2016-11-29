@@ -4,6 +4,7 @@ class HomeController < ApplicationController
 
   def row_data
     @selected_cards = Cube.find(session[:cube_id]).selected_cards
+    render :row_data
   end
   
   def restore_LocalStorage
