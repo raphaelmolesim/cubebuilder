@@ -190,8 +190,9 @@ $ ->
         json_response = JSON.parse(response)
         colors_without_lands = window.Colors[0..(window.Colors.length - 2)]
         spellsLenghts = (json_response[c]['Spells'].length for c in colors_without_lands)
-        spellsLenghts.push(json_response['Land'].length)
+        spellsLenghts.push(Math.floor(json_response['Land'].length / 2))
         creatureLenghts = (json_response[c]['Creatures'].length for c in colors_without_lands)
+        creatureLenghts.push(Math.ceil(json_response['Land'].length / 2))
         array.sort((a, b) -> b - a) for array in [creatureLenghts, spellsLenghts]
         json_response['SpellsMaxLength'] = spellsLenghts[0]
         json_response['CreaturesMaxLength'] = creatureLenghts[0]

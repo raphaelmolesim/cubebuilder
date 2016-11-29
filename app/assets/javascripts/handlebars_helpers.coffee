@@ -3,6 +3,9 @@ Handlebars.registerHelper 'json', (context) ->
 	
 cubeSafeGet = (cube, color, type, index) -> 
   if color == 'Land'
+    first_half = (type == "Spells")
+    index = if (first_half) then index else Math.floor((cube[color].length / 2)) + index
+    console.log(index)
     if cube[color].length > index
       new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][index]))      
     else 
