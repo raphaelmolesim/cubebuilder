@@ -4,8 +4,9 @@ class ArchitypesController < ApplicationController
   # GET /architypes
   # GET /architypes.json
   def index
-    @architypes = Architype.eager_load(:selected_cards).all
-    @architypes.to_json
+    @architypes = Architype.eager_load(:selected_cards)
+    @architypes.each { |a| a.selected_cards = a.selected_cards.select { |s| s.cube_id == session[:cube_id] } }
+    
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @architypes }
