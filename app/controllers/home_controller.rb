@@ -10,6 +10,8 @@ class HomeController < ApplicationController
     selected_cards.each do |item|
       card = item.card
       obj = localStorage.detect { |c| c[:id] == card.id }
+      puts "====> #{card} #{item}"
+      puts "----> #{item.architype}"
       if obj
         obj[:architypes] << item.architype.id
       else
