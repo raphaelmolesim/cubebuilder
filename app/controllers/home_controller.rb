@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   
   def restore_LocalStorage
     without_archetype = SelectedCard.all.select { |s| s.architype.nil? }
-    puts "====> #{without_archetype.size} <===="
+    puts "====> #{without_archetype.size} / #{SelectedCard.all.size} <===="
 
     selected_cards = Cube.find(session[:cube_id]).selected_cards
     
