@@ -5,7 +5,7 @@ class Architype < ApplicationRecord
   
   def as_json(options = { })
       h = super(options)
-      h[:cards_count] = selected_card.size
+      h[:cards_count] = selected_cards.size
       h
   end
 
