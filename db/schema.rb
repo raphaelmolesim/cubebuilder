@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161125205616) do
+ActiveRecord::Schema.define(version: 20161203185840) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "architypes", force: :cascade do |t|
+  create_table "archetypes", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -47,9 +47,9 @@ ActiveRecord::Schema.define(version: 20161125205616) do
     t.integer  "cube_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.integer  "architype_id"
-    t.index ["architype_id"], name: "index_selected_cards_on_architype_id", using: :btree
-    t.index ["card_id", "cube_id", "architype_id"], name: "index_selected_cards_on_card_id_and_cube_id_and_architype_id", unique: true, using: :btree
+    t.integer  "archetype_id"
+    t.index ["archetype_id"], name: "index_selected_cards_on_archetype_id", using: :btree
+    t.index ["card_id", "cube_id", "archetype_id"], name: "index_selected_cards_on_card_id_and_cube_id_and_archetype_id", unique: true, using: :btree
     t.index ["card_id"], name: "index_selected_cards_on_card_id", using: :btree
     t.index ["cube_id"], name: "index_selected_cards_on_cube_id", using: :btree
   end

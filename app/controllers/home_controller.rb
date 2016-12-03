@@ -15,9 +15,9 @@ class HomeController < ApplicationController
       card = item.card
       obj = localStorage.detect { |c| c[:id] == card.id }
       if obj
-        obj[:architypes] << item.architype.id
+        obj[:archetypes] << item.archetype.id
       else
-        localStorage << { id: card.id , architypes: [item.architype.id] }
+        localStorage << { id: card.id , archetypes: [item.archetype.id] }
       end      
     end
     

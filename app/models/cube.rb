@@ -9,15 +9,15 @@ class Cube < ApplicationRecord
     current_cards = selected_cards.to_a
     
     cube_list.each do |card|
-      card[:architypes].each do |architype_id|
+      card[:archetypes].each do |archetype_id|
         selected_card = current_cards.detect { |c| 
-          c.card_id == card[:id] && c.architype_id == architype_id  }
+          c.card_id == card[:id] && c.archetype_id == archetype_id  }
           current_cards -= [selected_card]
         if selected_card
           true
         else          
           SelectedCard.create! cube_id: self.id, card_id: card[:id], 
-            architype_id: architype_id
+            archetype_id: archetype_id
         end
       end
     end

@@ -1,4 +1,4 @@
-class Architype < ApplicationRecord
+class Archetype < ApplicationRecord
 
   has_many :selected_cards
   

@@ -16,7 +16,7 @@ FactoryGirl.define do
     card.id 326
   end
   
-  factory :architype, class: Architype do |architype|
+  factory :archetype, class: Archetype do |architype|
     architype.name "UB Control"
     architype.id 15
   end
@@ -24,6 +24,6 @@ FactoryGirl.define do
   factory :selected_card, class: SelectedCard do |selected_card|
     association :cube, factory: :cube
     association :card, factory: :duress
-    association :architype, factory: :architype
+    association :archetype, factory: :archetype
   end
 end
