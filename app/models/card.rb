@@ -2,6 +2,9 @@ class Card < ApplicationRecord
   
   has_many :selected_cards
   
+  has_many :archetypes, through: :cardsets
+  has_many :cardsets
+  
   has_many :wishlists 
   has_many :cubes, through: :wishlists
     

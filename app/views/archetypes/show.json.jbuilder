@@ -1,1 +1,1 @@
-json.partial! "architypes/architype", architype: @architype
+json.partial! "archetypes/archetype", archetype: @archetype

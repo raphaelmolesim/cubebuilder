@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161203185840) do
+ActiveRecord::Schema.define(version: 20161203233607) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,15 @@ ActiveRecord::Schema.define(version: 20161203185840) do
     t.string   "colors_list"
     t.string   "types_list"
     t.string   "subtypes_list"
+  end
+
+  create_table "cardsets", force: :cascade do |t|
+    t.integer  "card_id"
+    t.integer  "archetype_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["archetype_id"], name: "index_cardsets_on_archetype_id", using: :btree
+    t.index ["card_id"], name: "index_cardsets_on_card_id", using: :btree
   end
 
   create_table "cubes", force: :cascade do |t|

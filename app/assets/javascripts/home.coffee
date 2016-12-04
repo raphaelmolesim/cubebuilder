@@ -13,21 +13,21 @@ $ ->
       method: 'GET'
       url: "/card/#{id}.js"
   
-  addCard = (cube_list, card_id, cube_id, archetype_id) ->
-    cube_list.push { id: card_id, archetypes: [archetype_id] }
-    localStorage.setItem 'cube_list', JSON.stringify(cube_list)
-    $.ajax(
-      method: 'PUT'
-      url: '/cubes/' + cube_id,
-      data: JSON.stringify(cube: cards: cube_list)
-      contentType: 'application/json'
-      dataType: 'json'
-    ).done( ->
-      $('#card_list').html ''
-      renderCube cube_list
-      loadArchitypes()
-    ).fail (e) ->
-      $('#card_list').html 'Error trying to save cube!'
+  #addCard = (cube_list, card_id, cube_id, archetype_id) ->
+  #  cube_list.push { id: card_id, archetypes: [archetype_id] }
+  #  localStorage.setItem 'cube_list', JSON.stringify(cube_list)
+  #  $.ajax(
+  #    method: 'PUT'
+  #    url: '/cubes/' + cube_id,
+  #    data: JSON.stringify(cube: cards: cube_list)
+  #    contentType: 'application/json'
+  #    dataType: 'json'
+  #  ).done( ->
+  #    $('#card_list').html ''
+  #    renderCube cube_list
+  #    loadArchitypes()
+  #  ).fail (e) ->
+  #    $('#card_list').html 'Error trying to save cube!'
   
   search_card = (card_name) ->
     getCardInfo(card_name).done (response) ->
@@ -35,9 +35,10 @@ $ ->
         return $('#card_list').html('Not Found')
       result = JSON.parse(response)
       result.forEach (c) -> c["types_list"] = JSON.parse(c["types_list"])
+      console.log(Window.archetypes.archetypes)
       text = HandlebarsTemplates['cards/show'](
         card: result[0],
-        archetypes: Window.archetypes,
+        archetypes: Window.archetypes.archetypes,
         others: result.filter (c) -> c["id"] != result[0]["id"]
       )
       $('#card_list').html text
@@ -57,9 +58,10 @@ $ ->
       if response == ''
         return $('#card_list').html('Not Found')  
       response["types_list"] = JSON.parse(response["types_list"])
+      console.log(Window.archetypes.archetypes)
       text = HandlebarsTemplates['cards/show'](
         card: response,
-        archetypes: Window.archetypes
+        archetypes: Window.archetypes.archetypes
       )
       $('#card_list').html text
   
@@ -75,7 +77,7 @@ $ ->
       response["types_list"] = JSON.parse(response["types_list"])
       text = HandlebarsTemplates['cards/show'](
         card: response,
-        archetypes: Window.archetypes
+        archetypes: Window.archetypes.archetypes
         delete_option: true
       )
       $('#card_list').html text
@@ -106,17 +108,17 @@ $ ->
       renderCube(cube_list)
       $('#card_list').html "Removed from group"
   
-  $('#card_list').on 'click', 'a.add-card', (e) ->
-    card_id = $(e.toElement).data('cardid')
-    archetype_id = $(e.toElement).data('id') 
-    cubeList = []
-    if localStorage.cube_list != undefined
-      cubeList = JSON.parse(localStorage.cube_list)
-    cards = cubeList.map (c) -> c.archetypes.map (a) -> "#{c.id}&#{a}"
-    if not("#{card_id}&#{archetype_id}" in [].concat.apply([], cards))
-      addCard cubeList, card_id, $("#cubeId").html(), archetype_id  
-    else
-      $('#card_list').html "Already in the cube!"
+  #$('#card_list').on 'click', 'a.add-card', (e) ->
+  #  card_id = $(e.toElement).data('cardid')
+  #  archetype_id = $(e.toElement).data('id') 
+  #  cubeList = []
+  #  if localStorage.cube_list != undefined
+  #    cubeList = JSON.parse(localStorage.cube_list)
+  #  cards = cubeList.map (c) -> c.archetypes.map (a) -> "#{c.id}&#{a}"
+  #  if not("#{card_id}&#{archetype_id}" in [].concat.apply([], cards))
+  #    addCard cubeList, card_id, $("#cubeId").html(), archetype_id  
+  #  else
+  #    $('#card_list').html "Already in the cube!"
   
   addToWishlist = (card_id, remove) ->
     $.ajax
@@ -206,14 +208,14 @@ $ ->
   
   restoreCube()
     
-  loadArchetypes = ->
-    $.ajax
-      method: 'GET'
-      url: '/archetypes.json'
-     .done (response )->
-       Window.archetypes = response
-       text = HandlebarsTemplates['cards/archetype'](response)
-       $('#archetypes').html text
+  #loadArchetypes = ->
+  #  $.ajax
+  #    method: 'GET'
+  #    url: '/archetypes.json'
+  #   .done (response )->
+  #     Window.archetypes = response
+  #     text = HandlebarsTemplates['cards/archetype'](response)
+  #     $('#archetypes').html text
   
   loadWishlist = (func) ->
     $.ajax
@@ -224,4 +226,4 @@ $ ->
        Window.wishlist = response
        func.call()
        
-  loadArchetypes() 
+  #loadArchetypes() 

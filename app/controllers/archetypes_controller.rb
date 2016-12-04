@@ -1,10 +1,10 @@
 class ArchetypesController < ApplicationController
-  before_action :set_archetype, only: [:show, :edit, :update, :destroy]
+  before_action :set_archetype, only: [:show, :edit, :update, :destroy, :add_card]
 
   # GET /architypes
   # GET /architypes.json
   def index
-    @archetypes = Archetype.eager_load(:selected_cards)
+    @archetypes = Archetype.eager_load(:selected_cards).eager_load(:cardsets)
     @archetypes.each { |a| a.selected_cards = a.selected_cards.select { |s| s.cube_id == session[:cube_id] } }
     
     respond_to do |format|
@@ -64,6 +64,14 @@ class ArchetypesController < ApplicationController
     respond_to do |format|
       format.html { redirect_to archetypes_url, notice: 'Archetype was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+  
+  def add_card
+    card = Card.find(params[:card_id])
+    Cardset.create!(card_id: card.id, archetype_id: @archetype.id)
+    respond_to do |format|
+      format.json { render :show, status: :ok, location: @archetype }
     end
   end
 

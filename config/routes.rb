@@ -5,7 +5,13 @@ Rails.application.routes.draw do
   get 'cubes/wishlist'
   post 'cubes/set_wishlist'
   resources :cubes
-  resources :archetypes
+  
+  resources :archetypes do 
+    member do
+      put 'add_card'
+    end
+  end
+  
   get 'card/cube_load'
   get 'card/search'
   get '/card/:id', to: "card#show"
