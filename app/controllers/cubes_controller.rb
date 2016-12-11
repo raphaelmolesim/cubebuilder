@@ -1,5 +1,5 @@
 class CubesController < ApplicationController
-  before_action :set_cube, only: [:show, :edit, :update, :destroy]
+  before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype]
 
   skip_before_filter :authenticate
 
@@ -45,7 +45,21 @@ class CubesController < ApplicationController
     respond_to do |format|
       cube = Cube.find(params[:id])
       
-      if cube.sync_all_cube(params[:cube][:cards])
+      if true
+        format.html { redirect_to @cube, notice: 'Cube was successfully updated.' }
+        format.json { render :show, status: :ok, location: @cube }
+      else
+        format.html { render :edit }
+        format.json { render json: @cube.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def add_archetype
+    respond_to do |format|
+      @cube.archetypes << Archetype.find(params[:archetype_id])
+      
+      if @cube.save!
         format.html { redirect_to @cube, notice: 'Cube was successfully updated.' }
         format.json { render :show, status: :ok, location: @cube }
       else

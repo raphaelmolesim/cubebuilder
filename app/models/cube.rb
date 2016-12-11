@@ -5,6 +5,9 @@ class Cube < ApplicationRecord
   has_many :wishlists 
   has_many :cubes, through: :wishlists 
   
+  has_many :archetypes, through: :archetypes_in_cubes
+  has_many :archetypes_in_cubes
+  
   def sync_all_cube cube_list
     current_cards = selected_cards.to_a
     

@@ -4,9 +4,12 @@ class ArchetypesController < ApplicationController
   # GET /architypes
   # GET /architypes.json
   def index
-    @archetypes = Archetype.eager_load(:selected_cards).eager_load(:cardsets)
-    @archetypes.each { |a| a.selected_cards = a.selected_cards.select { |s| s.cube_id == session[:cube_id] } }
-    
+    if (params[:all] == "true")
+      @archetypes = Archetype.all
+    else
+      @archetypes = Cube.eager_load(:archetypes_in_cubes).find(session[:cube_id]).archetypes
+    end
+
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @archetypes }
@@ -71,7 +74,7 @@ class ArchetypesController < ApplicationController
     card = Card.find(params[:card_id])
     Cardset.create!(card_id: card.id, archetype_id: @archetype.id)
     respond_to do |format|
-      format.json { render :show, status: :ok, location: @archetype }
+      format.json { render json: @archetype , status: :ok}
     end
   end
 

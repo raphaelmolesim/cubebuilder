@@ -23,13 +23,13 @@ class CubeEditorPage
   
   constructor: () ->
     Window.archetypes = new Archetypes()
-    @addCard = new Window.AddCardInArchetype()
+    #@addCard = new Window.AddCardInArchetype()
     
   renderArchetypes: () ->
     Window.archetypes.fetch (archetypes) ->
-      text = HandlebarsTemplates['cards/archetype'](archetypes)
+      text = HandlebarsTemplates['cube_builder/archetypes_badges'](archetypes)
       $('#archetypes').html text
       
 $().ready ->
   Window.cube = new CubeEditorPage()
-  Window.cube.renderArchetypes()
+  #Window.cube.renderArchetypes()

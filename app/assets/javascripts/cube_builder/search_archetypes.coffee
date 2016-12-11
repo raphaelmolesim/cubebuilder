@@ -1,0 +1,43 @@
+class CubeBuilder.SearchArchetypes
+
+  constructor: (@cubeId) ->
+    
+  load: (callback) ->
+    self = this
+    self.all (archetypes) ->
+      $( "#archetype_search" ).autocomplete
+        select: (event, ui) ->
+          archetypeId = parseInt(ui.item.value)
+          self.add_archetype(archetypeId, self.cubeId)
+          $( "#archetype_search" ).val ""
+          false 
+        source: archetypes.map (item) -> value: item.id, label: item.name
+      callback()
+  
+  all: (action) ->
+    self = this
+    if (@allArchetypes == undefined)
+      $.ajax
+        method: 'GET'
+        url: '/archetypes.json'
+        data: all : true
+      .done (response) ->
+        self.allArchetypes = response
+        action(self.allArchetypes)
+    else
+      action(self.allArchetypes)  
+  
+  add_archetype: (archetypeId, cubeId) ->
+    self = this
+    $.ajax
+      method: 'PUT'
+      url: "/cubes/#{cubeId}/add_archetype"
+      data: archetype_id: archetypeId
+      dataType: "json"
+     .done (response) ->
+       self.archetypesBadges.renderCubeBadges(response.archetypes)       
+       
+  refresh_archetype: (archetype) ->
+    index = @allArchetypes.findIndex (a) => a.id == archetype.id
+    @allArchetypes[index] = archetype
+    

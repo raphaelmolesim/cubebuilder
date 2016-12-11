@@ -4,7 +4,12 @@ Rails.application.routes.draw do
 
   get 'cubes/wishlist'
   post 'cubes/set_wishlist'
-  resources :cubes
+    
+  resources :cubes do
+    member do
+     put 'add_archetype' 
+    end
+  end
   
   resources :archetypes do 
     member do
