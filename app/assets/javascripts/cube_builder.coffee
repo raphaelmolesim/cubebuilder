@@ -9,7 +9,7 @@ class CubeBuilderApp
       @archetypesBadges.renderCubeBadges()
       
       @searchCard = new CubeBuilder.SearchCard(@archetypesBadges)
-      @cardShow = new CubeBuilder.CardShow(@archetypesBadges, @searchArchetypes)
+      @cardShow = new CubeBuilder.CardShow(@archetypesBadges, @searchArchetypes, @searchCard)
       
     
 $().ready ->

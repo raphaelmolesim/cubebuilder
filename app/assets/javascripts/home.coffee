@@ -32,22 +32,22 @@ $ ->
   #  card_name = $('#card_name').val()
   #  search_card card_name
   
-  $('#card_list').on 'click', 'a.show_card', (e) ->
-    card_id = $(e.toElement).data('id')
-    $.ajax
-      method: 'GET'
-      url: "/card/#{card_id}.js",
-      dataType: "json"
-    .done (response) ->
-      if response == ''
-        return $('#card_list').html('Not Found')  
-      response["types_list"] = JSON.parse(response["types_list"])
-      console.log(Window.archetypes.archetypes)
-      text = HandlebarsTemplates['cards/show'](
-        card: response,
-        archetypes: Window.archetypes.archetypes
-      )
-      $('#card_list').html text
+  #$('#card_list').on 'click', 'a.show_card', (e) ->
+  #  card_id = $(e.toElement).data('id')
+  #  $.ajax
+  #    method: 'GET'
+  #    url: "/card/#{card_id}.js",
+  #    dataType: "json"
+  #  .done (response) ->
+  #    if response == ''
+  #      return $('#card_list').html('Not Found')  
+  #    response["types_list"] = JSON.parse(response["types_list"])
+  #    console.log(Window.archetypes.archetypes)
+  #    text = HandlebarsTemplates['cards/show'](
+  #      card: response,
+  #      archetypes: Window.archetypes.archetypes
+  #    )
+  #    $('#card_list').html text
   
   $('#cube').on 'click', 'a.show_card', (e) ->
     card_id = $(e.toElement).data('id')

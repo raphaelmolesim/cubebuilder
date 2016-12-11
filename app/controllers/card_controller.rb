@@ -1,13 +1,8 @@
 class CardController < ApplicationController
   
   def show
-    card = Card.where(id: params[:id]).first
-    
-    if card
-      render text: card.to_json
-    else
-      render text: ""
-    end
+    @card = Card.where(id: params[:id]).first
+    respond_to { |format| format.json { render json: @card , status: :ok } }
   end
   
   def search    

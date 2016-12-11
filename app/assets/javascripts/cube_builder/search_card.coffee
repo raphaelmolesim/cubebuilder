@@ -9,15 +9,19 @@ class CubeBuilder.SearchCard
   search_card: (card_name) ->
     self = this
     getCardInfo(card_name).done (response) ->
-      if response == ''
-        return $('#card_list').html('Not Found')
       result = JSON.parse(response)
-      text = HandlebarsTemplates['cards/show'](
-        card: result[0],
-        archetypes: self.archetypesBadges.cubeArchetypes(),
-        others: result.filter (c) -> c["id"] != result[0]["id"]
-      )
-      $('#card_list').html text
+      self.renderCard(result)
+    
+  renderCard: (cards) ->
+    self = this
+    if cards == '' or cards == 'null'
+      return $('#card_list').html('Not Found')
+    text = HandlebarsTemplates['cards/show'](
+      card: cards[0],
+      archetypes: self.archetypesBadges.cubeArchetypes(),
+      others: cards.filter (c) -> c["id"] != cards[0]["id"]
+    )
+    $('#card_list').html text
   
   getCardInfo = (card_name) ->
     $.ajax

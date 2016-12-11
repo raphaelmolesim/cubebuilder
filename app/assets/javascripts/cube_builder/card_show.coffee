@@ -1,8 +1,9 @@
 class CubeBuilder.CardShow
   
-  constructor: (@archetypesBadges, @searchArchetypes) ->
+  constructor: (@archetypesBadges, @searchArchetypes, @searchCard) ->
     obj = this
     $('#card_list').on 'click', 'a.add-card', (e) -> obj.addCard(e)
+    $('#card_list').on 'click', 'a.show_card', (e) -> obj.show_card(e)
   
   createHashMap: (archetypesList) ->
     archetypesHashMap = {}
@@ -41,3 +42,12 @@ class CubeBuilder.CardShow
       #loadArchitypes()
     .fail (e) ->
       $('#card_list').html 'Error trying to save!'
+
+  show_card: (e) ->    
+    card_id = $(e.toElement).data('id')
+    $.ajax
+      method: 'GET'
+      url: "/card/#{card_id}.json",
+      dataType: "json"
+    .done (response) => 
+      @searchCard.renderCard ([response])
