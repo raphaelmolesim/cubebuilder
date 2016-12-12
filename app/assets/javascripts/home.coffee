@@ -84,13 +84,13 @@ $ ->
     ).fail (e) ->
       $('#card_list').html 'Error trying to save cube!'
   
-  $('#card_list').on 'click', 'a.remove-card', (e) ->
-    cube_list = JSON.parse(localStorage.cube_list)
-    card_id = $(e.toElement).data('cardid')
-    cube_id = $("#cubeId").html()
-    removeCard(cube_id, cube_list, card_id).done ->
-      renderCube(cube_list)
-      $('#card_list').html "Removed from group"
+  #$('#card_list').on 'click', 'a.remove-card', (e) ->
+  #  cube_list = JSON.parse(localStorage.cube_list)
+  #  card_id = $(e.toElement).data('cardid')
+  #  cube_id = $("#cubeId").html()
+  #  removeCard(cube_id, cube_list, card_id).done ->
+  #    renderCube(cube_list)
+  #    $('#card_list').html "Removed from group"
     
   addToWishlist = (card_id, remove) ->
     $.ajax
@@ -178,7 +178,7 @@ $ ->
       localStorage.setItem 'cube_list', JSON.stringify(response)
       renderCube()
   
-  restoreCube()
+  #restoreCube()
   
   loadWishlist = (func) ->
     $.ajax

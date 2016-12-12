@@ -7,7 +7,8 @@ Rails.application.routes.draw do
     
   resources :cubes do
     member do
-     put 'add_archetype' 
+     put 'add_archetype'
+     get 'view' 
     end
   end
   

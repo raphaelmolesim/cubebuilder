@@ -13,7 +13,7 @@ cubeSafeGet = (cube, color, type, index) ->
   else if cube[color][type].length > index
     if (cube[color][type][index] != undefined and cube[color][type][index] != null)
       id = cube[color][type][index]["id"]
-      cube[color][type][index]["wishlist"] = (id in Window.wishlist)
+      #cube[color][type][index]["wishlist"] = (id in Window.wishlist)
     new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][type][index]))
   else
     ''

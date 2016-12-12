@@ -8,8 +8,10 @@ class CubeBuilderApp
       @searchArchetypes.archetypesBadges = @archetypesBadges
       @archetypesBadges.renderCubeBadges()
       
-      @searchCard = new CubeBuilder.SearchCard(@archetypesBadges)
-      @cardShow = new CubeBuilder.CardShow(@archetypesBadges, @searchArchetypes, @searchCard)
+
+      @cardShow = new CubeBuilder.CardShow(@archetypesBadges, @searchArchetypes)
+      @searchCard = new CubeBuilder.SearchCard(@archetypesBadges, @cardShow)
+      @cubeView = new CubeBuilder.CubeView(@cubeId)
       
     
 $().ready ->

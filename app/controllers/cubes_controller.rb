@@ -1,5 +1,5 @@
 class CubesController < ApplicationController
-  before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype]
+  before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype, :view]
 
   skip_before_filter :authenticate
 
@@ -102,6 +102,60 @@ class CubesController < ApplicationController
     respond_to do |format|
       format.json { render json: wishlist, tatus: :ok }
     end     
+  end
+  
+  def view 
+    colors = [:Black, :Blue, :Red, :White, :Green, :Colorless, :Multicolor ]
+    cube_view = colors.inject({}) { |r, item| r[item] = { :Spells => [], :Creatures => []} ; r }
+    cube_view[:Land] = []
+    summary = { Spells: {}, Creatures: {} }
+    repetition = []    
+    
+    @cube.archetypes.map { |a| a.cards }.flatten.each do |card|
+      puts "Got into!"
+      next if (repetition.include? card.id)
+      
+      repetition << card.id      
+      color = nil
+      
+      if (card.types.include? "Land")
+        cube_view[:Land] << item
+        summary[:Land] ||= 0
+        summary[:Land] += 1
+        summary[:Cards] ||= 0
+        summary[:Cards] += 1
+        next
+      end
+      
+      if card.colors.size == 1
+        color = card.colors.first.to_sym
+      elsif card.colors.size == 0
+        color = :Colorless
+      elsif card.colors.size > 1
+        color = :Multicolor
+      end
+      
+      if card.types.include? "Creature"
+        summary[:Creatures][color] ||= 0
+        summary[:Creatures][color] += 1
+        cube_view[color][:Creatures] << card
+      else
+        summary[:Spells][color] ||= 0
+        summary[:Spells][color] += 1
+        cube_view[color][:Spells] << card
+      end
+      
+      summary[color] ||= 0
+      summary[color] += 1
+      summary[:Cards] ||= 0
+      summary[:Cards] += 1
+      
+    end
+    
+    cube_view.each { |color, map| map.each { |type, cards| cards.sort!{ |c1, c2| c1.cmc <=> c2.cmc } } if color != :Land }
+    cube_view[:Total] = summary
+    
+    render text: cube_view.to_json
   end
 
   private
