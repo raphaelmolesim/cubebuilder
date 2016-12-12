@@ -10,7 +10,7 @@ class Archetype < ApplicationRecord
   
   def as_json(options = { })
       h = super(options)
-      h[:cards_count] = selected_cards.size
+      h[:cards_count] = cardsets.size
       h[:cards] = cardsets.map { |s| s.card }
       h[:cube_ids] = cube_ids
       h

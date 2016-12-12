@@ -3,9 +3,7 @@ class CubeBuilder.ArchetypesBadges
   constructor: (@cubeId, @searchArchetypes) ->
     
   cubeArchetypes: () ->
-    result = @searchArchetypes.all (archetypes) => archetypes.filter (a) => @cubeId in a.cube_ids 
-    console.log(result)
-    result
+    @searchArchetypes.all (archetypes) => archetypes.filter (a) => @cubeId in a.cube_ids 
     
   renderCubeBadges: (archetypes) ->
     if (archetypes == undefined)

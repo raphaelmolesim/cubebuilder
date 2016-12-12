@@ -1,6 +1,6 @@
 class CubeBuilder.CardShow
   
-  constructor: (@archetypesBadges, @searchArchetypes, @searchCard) ->
+  constructor: (@archetypesBadges, @searchArchetypes, @cubeView) ->
     obj = this
     $('#card_list').on 'click', 'a.add-card', (e) -> obj.addCard(e)
     $('#card_list').on 'click', 'a.show_card', (e) -> obj.showCard(e)
@@ -18,10 +18,7 @@ class CubeBuilder.CardShow
     @archetypes = this.createHashMap(@archetypesBadges.cubeArchetypes())
     $element = $(e.toElement)
     cardId = parseInt $element.data('card')
-    archetypeId = $element.data('id') 
-    console.log("oioio")
-    console.log(@archetypes)
-    Window.element = @archetypes
+    archetypeId = $element.data('id')
     cardList = @archetypes[archetypeId] or []
     
     if not (cardId in cardList)
@@ -39,8 +36,8 @@ class CubeBuilder.CardShow
     .done (response) =>
       @searchArchetypes.refresh_archetype(response)
       $('#card_list').html ''
-      #renderCube cube_list
-      #loadArchitypes()
+      @cubeView.render()
+      @archetypesBadges.renderCubeBadges()
     .fail (e) ->
       $('#card_list').html 'Error trying to save!'
 
