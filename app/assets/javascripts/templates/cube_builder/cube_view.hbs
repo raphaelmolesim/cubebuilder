@@ -1,6 +1,63 @@
 <table border="0" cellspacing="5" cellpadding="5" class="table ">
+
 	<tr>
-		<th>CMC</th>
+		<th></th>
+		<th>Black</th>
+		<th>Blue</th>
+		<th>Red</th>
+		<th>White</th>
+		<th>Green</th>
+		<th>Colorless</th>
+		<th>MultiColor</th>
+		<th>Land</th>
+	</tr>
+
+	<tr>
+		<td><strong>Total Spells</strong></td>
+		<td>{{ percentage Total.Spells.Black Total.Black }}</td>
+		<td>{{ percentage Total.Spells.Blue Total.Blue }}</td>
+		<td>{{ percentage Total.Spells.Red Total.Red }}</td>
+		<td>{{ percentage Total.Spells.White Total.White }}</td>
+		<td>{{ percentage Total.Spells.Green Total.Green }}</td>
+		<td>{{ percentage Total.Spells.Colorless Total.Colorless }}</td>
+		<td>{{ percentage Total.Spells.Multicolor Total.Multicolor }}</td>
+		<td></td>
+	</tr>
+	
+	<tr>
+		<td><strong>Total Creatures</strong></td>
+		<td>{{ percentage Total.Creatures.Black Total.Black }}</td>
+		<td>{{ percentage Total.Creatures.Blue Total.Blue }}</td>
+		<td>{{ percentage Total.Creatures.Red Total.Red }}</td>
+		<td>{{ percentage Total.Creatures.White Total.White }}</td>
+		<td>{{ percentage Total.Creatures.Green Total.Green }}</td>
+		<td>{{ percentage Total.Creatures.Colorless Total.Colorless }}</td>
+		<td>{{ percentage Total.Creatures.Multicolor Total.Multicolor }}</td>
+		<td></td>
+	</tr>
+  
+	<tr>
+		<td><strong>Total</strong></td>
+		<td>{{ Total.Black }}</td>
+		<td>{{ Total.Blue }}</td>
+		<td>{{ Total.Red }}</td>
+		<td>{{ Total.White }}</td>
+		<td>{{ Total.Green }}</td>
+		<td>{{ Total.Colorless }}</td>
+		<td>{{ Total.Multicolor }}</td>
+		<td>{{ Total.Land }}</td>
+	</tr>
+
+  <tr>
+		<td colspan="8" style="text-align: right"><strong>Total Cards:</strong></td>
+		<td>{{ Total.Cards }}</td>
+	</tr>
+</table>
+
+<table border="0" cellspacing="5" cellpadding="5" class="table ">
+
+	<tr>
+		<th></th>
 		<th>Black</th>
 		<th>Blue</th>
 		<th>Red</th>
@@ -27,17 +84,7 @@
 	</tr>
 	{{/cubeIterator}}
 	
-	<tr>
-		<td><strong>Total Spells</strong></td>
-		<td>{{ Total.Spells.Black }}</td>
-		<td>{{ Total.Spells.Blue }}</td>
-		<td>{{ Total.Spells.Red }}</td>
-		<td>{{ Total.Spells.White }}</td>
-		<td>{{ Total.Spells.Green }}</td>
-		<td>{{ Total.Spells.Colorless }}</td>
-		<td>{{ Total.Spells.Multicolor }}</td>
-		<td>{{ Total.Spells.Land }}</td>
-	</tr>
+	
 	
 	{{#cubeIterator 0 CreaturesMaxLength 1 "Creatures" }}
 	<tr>
@@ -53,35 +100,6 @@
 		<td></td>
 	</tr>
 	{{/cubeIterator}}
-	
-	<tr>
-		<td><strong>Total Creatures</strong></td>
-		<td>{{ Total.Creatures.Black }}</td>
-		<td>{{ Total.Creatures.Blue }}</td>
-		<td>{{ Total.Creatures.Red }}</td>
-		<td>{{ Total.Creatures.White }}</td>
-		<td>{{ Total.Creatures.Green }}</td>
-		<td>{{ Total.Creatures.Colorless }}</td>
-		<td>{{ Total.Creatures.Multicolor }}</td>
-		<td>{{ Total.Creatures.Land }}</td>
-	</tr>
-  
-	<tr>
-		<td><strong>Total</strong></td>
-		<td>{{ Total.Black }}</td>
-		<td>{{ Total.Blue }}</td>
-		<td>{{ Total.Red }}</td>
-		<td>{{ Total.White }}</td>
-		<td>{{ Total.Green }}</td>
-		<td>{{ Total.Colorless }}</td>
-		<td>{{ Total.Multicolor }}</td>
-		<td>{{ Total.Land }}</td>
-	</tr>
-  
-	<tr>
-		<td colspan="8" style="text-align: right"><strong>Total Cards:</strong></td>
-		<td>{{ Total.Cards }}</td>
-	</tr>
   
   
 </table>

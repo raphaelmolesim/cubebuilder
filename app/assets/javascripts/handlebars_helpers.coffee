@@ -27,3 +27,11 @@ Handlebars.registerHelper 'cubeIterator', (from, to, incr, type, block) ->
     html += block.fn(this, data: data)
     i += incr
   html
+  
+Handlebars.registerHelper "percentage", (partial, total, options) ->
+    return new Handlebars.SafeString("0 &nbsp;&nbsp; (0%)") if (partial == undefined)
+  
+    fpartial = parseFloat(partial)
+    ftotal = parseFloat(total)
+    value = Math.ceil((fpartial / ftotal) * 100.0)    
+    new Handlebars.SafeString("#{partial} &nbsp;&nbsp; (#{value}%)")
