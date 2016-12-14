@@ -85,7 +85,6 @@ class CubesController < ApplicationController
     item = Wishlist.where(cube_id: @cube.id, card_id: card.id).first
     remove = params[:remove] == 'true'
     create = (not item and not remove)
-    puts "====> #{item} params:#{remove}  #{create} #{(not item)} #{(not remove)} "
     if (item and remove)
       item.delete
     elsif (not item and not remove)

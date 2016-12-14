@@ -7,14 +7,13 @@ cubeSafeGet = (cube, color, type, index) ->
     index = if (first_half) then index else Math.floor((cube[color].length / 2)) + index
     console.log(index)
     if cube[color].length > index
-      new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][index]))      
+      new Handlebars.SafeString(HandlebarsTemplates['cube_builder/cell_view'](cube[color][index]))      
     else 
       ''
   else if cube[color][type].length > index
     if (cube[color][type][index] != undefined and cube[color][type][index] != null)
       id = cube[color][type][index]["id"]
-      #cube[color][type][index]["wishlist"] = (id in Window.wishlist)
-    new Handlebars.SafeString(HandlebarsTemplates['cards/cell'](cube[color][type][index]))
+    new Handlebars.SafeString(HandlebarsTemplates['cube_builder/cell_view'](cube[color][type][index]))
   else
     ''
 	

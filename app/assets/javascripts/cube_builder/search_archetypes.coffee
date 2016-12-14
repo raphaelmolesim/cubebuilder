@@ -1,6 +1,6 @@
 class CubeBuilder.SearchArchetypes
 
-  constructor: (@cubeId) ->
+  constructor: (@cubeId, @cubeView) ->
     
   load: (callback) ->
     self = this
@@ -35,7 +35,8 @@ class CubeBuilder.SearchArchetypes
       data: archetype_id: archetypeId
       dataType: "json"
      .done (response) ->
-       self.archetypesBadges.renderCubeBadges(response.archetypes)       
+       self.archetypesBadges.renderCubeBadges(response.archetypes)
+       self.cubeView.render()
        
   refresh_archetype: (archetype) ->
     index = @allArchetypes.findIndex (a) => a.id == archetype.id

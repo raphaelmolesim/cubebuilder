@@ -1,5 +1,5 @@
 class ArchetypesController < ApplicationController
-  before_action :set_archetype, only: [:show, :edit, :update, :destroy, :add_card]
+  before_action :set_archetype, only: [:show, :edit, :update, :destroy, :add_card, :remove_card]
 
   # GET /architypes
   # GET /architypes.json
@@ -73,6 +73,15 @@ class ArchetypesController < ApplicationController
   def add_card
     card = Card.find(params[:card_id])
     Cardset.create!(card_id: card.id, archetype_id: @archetype.id)
+    respond_to do |format|
+      format.json { render json: @archetype , status: :ok}
+    end
+  end
+  
+  def remove_card
+    card = Card.find(params[:card_id])
+    puts "  => #{card} #{params[:card_id]}"
+    Cardset.where(card_id: card.id, archetype_id: @archetype.id).delete_all
     respond_to do |format|
       format.json { render json: @archetype , status: :ok}
     end

@@ -10,7 +10,7 @@ class CubeBuilder.SearchCard
     self = this
     getCardInfo(card_name).done (response) ->
       result = JSON.parse(response)
-      self.searchArchetypes.renderCard(result)
+      self.searchArchetypes.renderCard(result, false)
   
   getCardInfo = (card_name) ->
     $.ajax

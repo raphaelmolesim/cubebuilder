@@ -1,10 +1,12 @@
 class CubeBuilder.CardShow
   
-  constructor: (@archetypesBadges, @searchArchetypes, @cubeView) ->
+  constructor: (@archetypesBadges, @searchArchetypes, @cubeView, @cubeId, @wishlistView) ->
     obj = this
     $('#card_list').on 'click', 'a.add-card', (e) -> obj.addCard(e)
     $('#card_list').on 'click', 'a.show_card', (e) -> obj.showCard(e)
     $('#card_list').on 'click', 'a.remove-card', (e) -> obj.removeCard(e)
+    $('#cube').on 'click', 'a.show_card', (e) -> obj.showCard(e, true)
+    $('#card_list').on 'change', '.add-wishlist', (e) -> obj.addWishlist(e)
   
   createHashMap: (archetypesList) ->
     archetypesHashMap = {}
@@ -41,43 +43,56 @@ class CubeBuilder.CardShow
     .fail (e) ->
       $('#card_list').html 'Error trying to save!'
 
-  showCard: (e) ->    
+  showCard: (e, deleteOption) ->    
     card_id = $(e.toElement).data('id')
     $.ajax
       method: 'GET'
       url: "/card/#{card_id}.json",
       dataType: "json"
     .done (response) => 
-      this.renderCard ([response])
+      this.renderCard([response], deleteOption)
 
-  renderCard: (cards) ->
+  renderCard: (cards, deleteOption) ->
     self = this
     if cards == '' or cards == 'null'
       return $('#card_list').html('Not Found')
+    other_cards = cards.filter (c) -> c["id"] != cards[0]["id"]
     text = HandlebarsTemplates['cube_builder/card_show'](
       card: cards[0],
       archetypes: self.archetypesBadges.cubeArchetypes(),
-      others: cards.filter (c) -> c["id"] != cards[0]["id"]
+      others: other_cards,
+      delete_option: deleteOption
     )
     $('#card_list').html text
       
   removeCard: (e) ->    
-   #card_id = $(e.toElement).data('id')
-   #cube_id = $("#cubeId").html()
-   #console.log(" --> #{card_id} ")
-   #cube_list = cube_list.filter (item) -> item.id != card_id;    
-   #$.ajax(
-   #  method: 'DELETE'
-   #  url: '/cubes/' + cube_id,
-   #  data: JSON.stringify(cube: cards: cube_list)
-   #  contentType: 'application/json'
-   #  dataType: 'json'
-   #).done( ->
-   #  $('#card_list').html ''
-   #  renderCube cube_list
-   #  loadArchitypes()
-   #  $('#card_list').html "Removed from group"
-   #).fail (e) ->
-   #  $('#card_list').html 'Error trying to save cube!'
+   card_id = $(e.toElement).data('card')
+   archetype_id = $(e.toElement).data('archetype')
+   $.ajax
+     method: 'DELETE'
+     url: "/archetypes/#{archetype_id}/remove_card"
+     data: JSON.stringify(card_id: card_id)
+     contentType: 'application/json'
+     dataType: 'json'
+   .done =>
+     @cubeView.render()
+     @archetypesBadges.renderCubeBadges()
+     $('#card_list').html "Removed from group"
+   .fail (e) ->
+     $('#card_list').html 'Error trying to save cube!'
 
-      
+  addWishlist: (e) ->
+    card_id = $(e.target).data('id')
+    remove = not e.target.checked
+    $.ajax
+      method: 'POST'
+      url: "/cubes/#{@cubeId}/set_wishlist"
+      data: { "card_id" : card_id, "remove" : remove }
+      dataType: 'json'
+    .done (response) =>
+      cell = $("a.show_card[data-id=#{card_id}]")
+      @wishlistView.wishlist_ids.push (card_id)
+      if (remove)
+        cell.removeClass("wishlist")
+      else
+        cell.addClass("wishlist")    

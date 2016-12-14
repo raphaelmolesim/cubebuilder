@@ -2,23 +2,22 @@ Rails.application.routes.draw do
   get 'session/logout'
   get 'home/row_data'
 
-  get 'cubes/wishlist'
-  post 'cubes/set_wishlist'
-    
   resources :cubes do
     member do
      put 'add_archetype'
-     get 'view' 
+     get 'view'
+     post 'set_wishlist'
+     get 'wishlist'
     end
   end
   
   resources :archetypes do 
     member do
       put 'add_card'
+      delete 'remove_card'
     end
   end
-  
-  get 'card/cube_load'
+
   get 'card/search'
   get '/card/:id', to: "card#show"
   root to: 'home#index'
