@@ -24,4 +24,5 @@ class CubeBuilderApp
     
 $().ready ->
   cubeId = parseInt($("#cubeId").html())
-  cubeBuilder = new CubeBuilderApp(cubeId)
+  if (!isNaN(cubeId))
+    cubeBuilder = new CubeBuilderApp(cubeId)

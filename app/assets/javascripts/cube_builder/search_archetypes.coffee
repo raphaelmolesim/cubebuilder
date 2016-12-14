@@ -35,8 +35,11 @@ class CubeBuilder.SearchArchetypes
       data: archetype_id: archetypeId
       dataType: "json"
      .done (response) ->
-       self.archetypesBadges.renderCubeBadges(response.archetypes)
-       self.cubeView.render()
+       self.allArchetypes = undefined
+       self.all (allArchetypes) =>
+         cubeArchetypes = allArchetypes.filter (a) => self.cubeId in a.cube_ids
+         self.archetypesBadges.renderCubeBadges(cubeArchetypes)
+         self.cubeView.render()
        
   refresh_archetype: (archetype) ->
     index = @allArchetypes.findIndex (a) => a.id == archetype.id

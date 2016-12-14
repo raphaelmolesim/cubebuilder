@@ -5,24 +5,37 @@
           {{ card.name }}
         </a> - {{ card.manaCost }}
       
-        <ul class="dropdown-menu">
-          {{#each archetypes }}
-          <li>
-            <a href="#" class="add-card" data-toggle="tab" data-id="{{ id }}" data-card="{{ ../card.id }}">
-              {{ name }}
-            </a>
+        <ul id="card-show-archetypes" class="dropdown-menu">
+          <li class="subsection">
+            Add to ...
+            <ul>
+              {{#each archetypes }}
+              <li>
+                <a href="#" class="add-card" data-toggle="tab" data-id="{{ id }}" data-card="{{ ../card.id }}">
+                  {{ name }}
+                </a>
+              </li>
+              {{/each }}
+            </ul>            
           </li>
-          {{/each }}
-          {{#if delete_option }}
-          <li class="divider"></li>
-            {{#each archetypes }}
-            <li>
-              <a href="#" class="remove-card" data-toggle="tab" data-card="{{ ../card.id }}" data-archetype="{{ id }}">
-                Remove from {{ name }}
-              </a>
-            </li>
-            {{/each }}
-          {{/if}}
+          <li class="subsection">
+            Remove from ...
+            <ul>
+              {{#if delete_option }}
+                {{#each archetypes }}
+                <li>
+                  <a href="#" class="remove-card" data-toggle="tab" data-card="{{ ../card.id }}" data-archetype="{{ id }}">
+                    {{ name }}
+                  </a>
+                </li>
+                {{/each }}
+              {{/if}}
+              
+            </ul>
+            
+          </li>
+          
+          
         </ul>
       </div>
 		</h4>

@@ -45,7 +45,7 @@ class CubesController < ApplicationController
     respond_to do |format|
       cube = Cube.find(params[:id])
       
-      if true
+      if cube.save!
         format.html { redirect_to @cube, notice: 'Cube was successfully updated.' }
         format.json { render :show, status: :ok, location: @cube }
       else
@@ -125,7 +125,7 @@ class CubesController < ApplicationController
       color = nil
       
       if (card.types.include? "Land")
-        cube_view[:Land] << item
+        cube_view[:Land] << card
         summary[:Land] ||= 0
         summary[:Land] += 1
         summary[:Cards] ||= 0
