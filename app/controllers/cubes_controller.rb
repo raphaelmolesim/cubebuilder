@@ -1,5 +1,5 @@
 class CubesController < ApplicationController
-  before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype, :view]
+  before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype, :view, :remove_archetype]
 
   skip_before_filter :authenticate
 
@@ -66,6 +66,13 @@ class CubesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @cube.errors, status: :unprocessable_entity }
       end
+    end
+  end
+  
+  def remove_archetype
+    respond_to do |format|
+      ArchetypesInCube.where(cube_id: @cube.id, archetype_id: params[:archetype_id]).delete_all
+      format.json { render :show, status: :ok, location: @cube }
     end
   end
 

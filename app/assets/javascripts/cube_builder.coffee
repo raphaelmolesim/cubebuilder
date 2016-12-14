@@ -12,7 +12,7 @@ class CubeBuilderApp
     
     @searchArchetypes = new CubeBuilder.SearchArchetypes(@cubeId, @cubeView)    
     @searchArchetypes.load =>
-      @archetypesBadges = new CubeBuilder.ArchetypesBadges(@cubeId, @searchArchetypes)
+      @archetypesBadges = new CubeBuilder.ArchetypesBadges(@cubeId, @searchArchetypes, @cubeView)
       @searchArchetypes.archetypesBadges = @archetypesBadges
       @archetypesBadges.renderCubeBadges()      
 

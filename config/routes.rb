@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :cubes do
     member do
      put 'add_archetype'
+     put 'remove_archetype'
      get 'view'
      post 'set_wishlist'
      get 'wishlist'
