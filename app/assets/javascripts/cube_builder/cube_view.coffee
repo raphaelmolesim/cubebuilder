@@ -1,6 +1,6 @@
 class CubeBuilder.CubeView
 
-  constructor: (@cubeId) ->
+  constructor: (@cubeId, @wishlistView) ->
 
   loadCube: (cubeId) ->
     $.ajax
@@ -29,4 +29,5 @@ class CubeBuilder.CubeView
     this.loadCube(@cubeId).done (response) =>
       @cubeView = response
       this.renderCube(@cubeView)
+      @wishlistView.addClassInWishlist(@wishlistView.wishlist_ids)
     

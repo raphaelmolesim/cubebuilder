@@ -5,10 +5,9 @@ class CubeBuilderApp
   constructor: (@cubeId) ->
     console.log("Cube Builder construtor")
     
-    @cubeView = new CubeBuilder.CubeView(@cubeId)
-    @cubeView.render()
-    
     @wishlistView = new CubeBuilder.WishlistView(@cubeId)
+    @cubeView = new CubeBuilder.CubeView(@cubeId, @wishlistView)
+    @cubeView.render()
     
     @searchArchetypes = new CubeBuilder.SearchArchetypes(@cubeId, @cubeView)    
     @searchArchetypes.load =>
@@ -19,7 +18,7 @@ class CubeBuilderApp
       @cardShow = new CubeBuilder.CardShow(@archetypesBadges, @searchArchetypes, @cubeView, @cubeId, @wishlistView)
       @searchCard = new CubeBuilder.SearchCard(@archetypesBadges, @cardShow)
       
-      @wishlistView.addClassInWishlist(@wishlistView.wishlist_ids)
+      
       @archetypesView = new CubeBuilder.ArchetypesView(@archetypesBadges)
     
 $().ready ->

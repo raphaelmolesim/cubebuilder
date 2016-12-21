@@ -77,6 +77,7 @@ class CubeBuilder.CardShow
      dataType: 'json'
    .done =>
      @cubeView.render()
+     @archetypesBadges.refresh()
      @archetypesBadges.renderCubeBadges()
      $('#card_list').html "Removed from group"
    .fail (e) ->

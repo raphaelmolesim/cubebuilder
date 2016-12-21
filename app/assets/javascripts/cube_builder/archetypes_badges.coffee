@@ -27,3 +27,6 @@ class CubeBuilder.ArchetypesBadges
          cubeArchetypes = allArchetypes.filter (a) => @cubeId in a.cube_ids
          self.renderCubeBadges(cubeArchetypes)
          self.cubeView.render()
+  
+  refresh: () ->
+    @searchArchetypes.allArchetypes = undefined
