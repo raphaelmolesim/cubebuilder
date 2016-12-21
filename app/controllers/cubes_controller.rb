@@ -117,12 +117,12 @@ class CubesController < ApplicationController
     summary = { Spells: {}, Creatures: {} }
     repetition = []    
     
+    fuse_cards = []
     @cube.archetypes.map { |a| a.cards }.flatten.each do |card|
-      puts "Got into!"
       next if (repetition.include? card.id)
       
       repetition << card.id      
-      color = nil
+      color = nil      
       
       if (card.types.include? "Land")
         cube_view[:Land] << card
@@ -132,8 +132,16 @@ class CubesController < ApplicationController
         summary[:Cards] += 1
         next
       end
+
       
-      if card.colors.size == 1
+      if not card.fuse_id.nil?
+        color = :Multicolor
+        if fuse_cards.include? card.id
+          next            
+        else
+          fuse_cards << card.fuse_id
+        end
+      elsif card.colors.size == 1     
         color = card.colors.first.to_sym
       elsif card.colors.size == 0
         color = :Colorless

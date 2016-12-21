@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161214203919) do
+ActiveRecord::Schema.define(version: 20161220210727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 20161214203919) do
     t.string   "colors_list"
     t.string   "types_list"
     t.string   "subtypes_list"
+    t.integer  "fuse_id"
   end
 
   create_table "cardsets", force: :cascade do |t|

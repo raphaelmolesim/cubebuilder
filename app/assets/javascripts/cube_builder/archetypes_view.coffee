@@ -11,7 +11,7 @@ class CubeBuilder.ArchetypesView
     listByType = { "Creatures" : [], "Spells" : [], "Lands" : [] }
     archetype = @archetypesBadges.cubeArchetypes().filter (archetype) -> archetype.id == archetypeId
     archetype[0].cards.forEach (card) ->
-      cell = $("a.show_card[data-id=#{card["id"]}]")
+      cell = $("#cube a.show_card[data-id=#{card["id"]}]")
       cardName = cell.html()
       cmc = cell.next().html()
       type = cell.data("type")

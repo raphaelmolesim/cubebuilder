@@ -43,6 +43,12 @@
 		<p>{{ card.text }} </p>
     {{#if card.power }}<p style="text-align: right">{{ card.power }} / {{ card.toughness }}</p>{{/if}}
     
+    
+    {{#if card.fuse }}
+    <p>
+      Fuse: <a href="#" class="show_card" data-id="{{ card.fuse.id }}">{{ card.fuse.name }}</a>      
+    </p>
+    {{/if}}
     <input type="checkbox" data-id="{{ card.id }}" class="add-wishlist">&nbsp;Add to wishlist</label>
     
 </div>

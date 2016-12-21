@@ -42,4 +42,19 @@ class Card < ApplicationRecord
     JSON self.subtypes_list
   end
   
+  def fuse
+    return nil if self.fuse_id.nil?
+    card = Card.find(self.fuse_id)
+    {
+      id: card.id,
+      name: card.name      
+    }
+  end
+  
+  def as_json(options = { })
+      h = super(options)
+      h[:fuse] = fuse
+      h
+  end
+  
 end

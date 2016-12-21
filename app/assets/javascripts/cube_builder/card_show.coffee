@@ -6,6 +6,7 @@ class CubeBuilder.CardShow
     $('#card_list').on 'click', 'a.show_card', (e) -> obj.showCard(e)
     $('#card_list').on 'click', 'a.remove-card', (e) -> obj.removeCard(e)
     $('#cube').on 'click', 'a.show_card', (e) -> obj.showCard(e, true)
+    $('#card_list').on 'click', 'a.show_card', (e) -> obj.showCard(e, true)
     $('#card_list').on 'change', '.add-wishlist', (e) -> obj.addWishlist(e)
   
   createHashMap: (archetypesList) ->
