@@ -44,9 +44,9 @@
     {{#if card.power }}<p style="text-align: right">{{ card.power }} / {{ card.toughness }}</p>{{/if}}
     
     
-    {{#if card.fuse }}
+    {{#if card.split_card }}
     <p>
-      Fuse: <a href="#" class="show_card" data-id="{{ card.fuse.id }}">{{ card.fuse.name }}</a>      
+      Split: <a href="#" class="show_card" data-id="{{ card.split_card.id }}">{{ card.split_card.name }}</a>      
     </p>
     {{/if}}
     <input type="checkbox" data-id="{{ card.id }}" class="add-wishlist">&nbsp;Add to wishlist</label>
