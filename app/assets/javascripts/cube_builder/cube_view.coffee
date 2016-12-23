@@ -29,5 +29,6 @@ class CubeBuilder.CubeView
     this.loadCube(@cubeId).done (response) =>
       @cubeView = response
       this.renderCube(@cubeView)
+      console.log(@wishlistView.wishlist_ids)
       @wishlistView.addClassInWishlist(@wishlistView.wishlist_ids)
     
