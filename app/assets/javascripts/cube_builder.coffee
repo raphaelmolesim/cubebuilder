@@ -13,7 +13,7 @@ class CubeBuilderApp
     @searchArchetypes.load =>
       @archetypesBadges = new CubeBuilder.ArchetypesBadges(@cubeId, @searchArchetypes, @cubeView)
       @searchArchetypes.archetypesBadges = @archetypesBadges
-      @archetypesBadges.renderCubeBadges()      
+      @archetypesBadges.loadArchetype()      
 
       @cardShow = new CubeBuilder.CardShow(@archetypesBadges, @searchArchetypes, @cubeView, @cubeId, @wishlistView)
       @searchCard = new CubeBuilder.SearchCard(@archetypesBadges, @cardShow)

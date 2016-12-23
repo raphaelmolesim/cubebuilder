@@ -18,16 +18,17 @@ class CubeBuilder.CardShow
     archetypesHashMap
 
   addCard: (e) ->
-    @archetypes = this.createHashMap(@archetypesBadges.cubeArchetypes())
-    $element = $(e.toElement)
-    cardId = parseInt $element.data('card')
-    archetypeId = $element.data('id')
-    cardList = @archetypes[archetypeId] or []
+    @archetypesBadges.cubeArchetypes (archetypes) =>
+      @archetypes = this.createHashMap(archetypes)
+      $element = $(e.toElement)
+      cardId = parseInt $element.data('card')
+      archetypeId = $element.data('id')
+      cardList = @archetypes[archetypeId] or []
     
-    if not (cardId in cardList)
-      this.save(cardId, archetypeId)
-    else
-      $('#card_list').html "Already in #{$element.html()}"
+      if not (cardId in cardList)
+        this.save(cardId, archetypeId)
+      else
+        $('#card_list').html "Already in #{$element.html()}"
   
   save: (cardId, archetypeId) ->
     $.ajax
@@ -40,7 +41,7 @@ class CubeBuilder.CardShow
       @searchArchetypes.refresh_archetype(response)
       $('#card_list').html ''
       @cubeView.render()
-      @archetypesBadges.renderCubeBadges()
+      @archetypesBadges.loadArchetype()
     .fail (e) ->
       $('#card_list').html 'Error trying to save!'
 
@@ -58,13 +59,14 @@ class CubeBuilder.CardShow
     if cards == '' or cards == 'null'
       return $('#card_list').html('Not Found')
     other_cards = cards.filter (c) -> c["id"] != cards[0]["id"]
-    text = HandlebarsTemplates['cube_builder/card_show'](
-      card: cards[0],
-      archetypes: self.archetypesBadges.cubeArchetypes(),
-      others: other_cards,
-      delete_option: deleteOption
-    )
-    $('#card_list').html text
+    self.archetypesBadges.cubeArchetypes (archetypes) => 
+      text = HandlebarsTemplates['cube_builder/card_show'](
+        card: cards[0],
+        archetypes: archetypes,
+        others: other_cards,
+        delete_option: deleteOption
+      )
+      $('#card_list').html text
       
   removeCard: (e) ->    
    card_id = $(e.toElement).data('card')
@@ -78,7 +80,7 @@ class CubeBuilder.CardShow
    .done =>
      @cubeView.render()
      @archetypesBadges.refresh()
-     @archetypesBadges.renderCubeBadges()
+     @archetypesBadges.loadArchetype()
      $('#card_list').html "Removed from group"
    .fail (e) ->
      $('#card_list').html 'Error trying to save cube!'

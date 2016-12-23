@@ -37,8 +37,8 @@ class CubeBuilder.SearchArchetypes
      .done (response) ->
        self.allArchetypes = undefined
        self.all (allArchetypes) =>
-         cubeArchetypes = allArchetypes.filter (a) => self.cubeId in a.cube_ids
-         self.archetypesBadges.renderCubeBadges(cubeArchetypes)
+         myArchetypes = allArchetypes.filter (a) => self.cubeId in a.cube_ids
+         self.archetypesBadges.loadArchetype(myArchetypes)
          self.cubeView.render()
        
   refresh_archetype: (archetype) ->

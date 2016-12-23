@@ -4,12 +4,20 @@ class CubeBuilder.ArchetypesBadges
     self = this
     $('#archetypes').on 'click', 'a.remove-archetype', (e) -> self.removeArchetype(e)
     
-  cubeArchetypes: () ->
-    @searchArchetypes.all (archetypes) => archetypes.filter (a) => @cubeId in a.cube_ids 
+  cubeArchetypes: (callback) ->
+    self = this
+    @searchArchetypes.all (archetypes) -> 
+      myArchetypes = archetypes.filter (a) -> self.cubeId in a.cube_ids 
+      callback(myArchetypes)
+  
+  loadArchetype: (archetypes) ->
+    self = this
+    if (archetypes == undefined)
+      this.cubeArchetypes( (archetypes) -> self.renderCubeBadges(archetypes) )
+    else
+      self.renderCubeBadges(archetypes)
     
   renderCubeBadges: (archetypes) ->
-    if (archetypes == undefined)
-      archetypes = this.cubeArchetypes()
     text = HandlebarsTemplates['cube_builder/archetypes_badges'](archetypes)
     $('#archetypes').html text
   
@@ -24,8 +32,8 @@ class CubeBuilder.ArchetypesBadges
      .done (response) =>
        @searchArchetypes.allArchetypes = undefined
        @searchArchetypes.all (allArchetypes) =>
-         cubeArchetypes = allArchetypes.filter (a) => @cubeId in a.cube_ids
-         self.renderCubeBadges(cubeArchetypes)
+         myArchetypes = allArchetypes.filter (a) => @cubeId in a.cube_ids
+         self.renderCubeBadges(myArchetypes)
          self.cubeView.render()
   
   refresh: () ->
