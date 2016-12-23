@@ -50,7 +50,7 @@ class ArchetypesController < ApplicationController
   # PATCH/PUT /architypes/1.json
   def update
     respond_to do |format|
-      if @architype.update(architype_params)
+      if @archetype.update(archetype_params)
         format.html { redirect_to @archetype, notice: 'Archetype was successfully updated.' }
         format.json { render :show, status: :ok, location: @archetype }
       else
@@ -94,7 +94,7 @@ class ArchetypesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def architype_params
+    def archetype_params
       params.require(:archetype).permit(:name)
     end
 end
