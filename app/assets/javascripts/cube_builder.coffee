@@ -7,7 +7,7 @@ class CubeBuilderApp
     
     @wishlistView = new CubeBuilder.WishlistView(@cubeId)
     @cubeView = new CubeBuilder.CubeView(@cubeId, @wishlistView)
-    @wishlistView.loadWishlist () -> 
+    @wishlistView.loadWishlist () => 
       @cubeView.render()
     
     @searchArchetypes = new CubeBuilder.SearchArchetypes(@cubeId, @cubeView)    
