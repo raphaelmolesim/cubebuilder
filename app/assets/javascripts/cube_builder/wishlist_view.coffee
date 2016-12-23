@@ -3,7 +3,6 @@ class CubeBuilder.WishlistView
   constructor: (@cubeId) ->
     @wishlist_ids = []
     self = this
-    self.loadWishlist () ->
     $("#show_wishlist").click -> self.showWishlist()      
   
   loadWishlist: (callback) ->
