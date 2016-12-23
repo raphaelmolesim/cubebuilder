@@ -18,8 +18,6 @@ class CubeBuilder.WishlistView
   addClassInWishlist: (wishlist_ids) ->
     wishlist_ids.forEach (id) ->      
       cell = $("a.show_card[data-id=#{id}]")
-      console.log("Mark cellß")
-      console.log(cell)
       cell.addClass("wishlist")
       
   showWishlist: (e) ->
