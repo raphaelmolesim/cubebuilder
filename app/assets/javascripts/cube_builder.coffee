@@ -19,7 +19,6 @@ class CubeBuilderApp
       @cardShow = new CubeBuilder.CardShow(@archetypesBadges, @searchArchetypes, @cubeView, @cubeId, @wishlistView)
       @searchCard = new CubeBuilder.SearchCard(@archetypesBadges, @cardShow)
       
-      
       @archetypesView = new CubeBuilder.ArchetypesView(@archetypesBadges)
     
 $().ready ->
