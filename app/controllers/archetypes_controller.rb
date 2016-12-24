@@ -1,8 +1,8 @@
 class ArchetypesController < ApplicationController
   before_action :set_archetype, only: [:show, :edit, :update, :destroy, :add_card, :remove_card]
 
-  # GET /architypes
-  # GET /architypes.json
+  # GET /archetypes
+  # GET /archetypes.json
   def index
     if (params[:all] == "true")
       @archetypes = Archetype.all
@@ -16,24 +16,24 @@ class ArchetypesController < ApplicationController
     end
   end
 
-  # GET /architypes/1
-  # GET /architypes/1.json
+  # GET /archetypes/1
+  # GET /archetypes/1.json
   def show
   end
 
-  # GET /architypes/new
+  # GET /archetypes/new
   def new
     @archetype = Archetype.new
   end
 
-  # GET /architypes/1/edit
+  # GET /archetypes/1/edit
   def edit
   end
 
-  # POST /architypes
-  # POST /architypes.json
+  # POST /archetypes
+  # POST /archetypes.json
   def create
-    @archetype = Archetype.new(architype_params)
+    @archetype = Archetype.new(archetype_params)
 
     respond_to do |format|
       if @archetype.save
@@ -46,8 +46,8 @@ class ArchetypesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /architypes/1
-  # PATCH/PUT /architypes/1.json
+  # PATCH/PUT /archetypes/1
+  # PATCH/PUT /archetypes/1.json
   def update
     respond_to do |format|
       if @archetype.update(archetype_params)
@@ -60,8 +60,8 @@ class ArchetypesController < ApplicationController
     end
   end
 
-  # DELETE /architypes/1
-  # DELETE /architypes/1.json
+  # DELETE /archetypes/1
+  # DELETE /archetypes/1.json
   def destroy
     @archetype.destroy
     respond_to do |format|
