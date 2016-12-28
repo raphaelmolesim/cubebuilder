@@ -10,6 +10,8 @@ class CubeBuilderApp
     @wishlistView.loadWishlist () => 
       @cubeView.render()
     
+    @cubeFilter = new CubeBuilder.CubeFilter(@cubeId, @cubeView)
+    
     @searchArchetypes = new CubeBuilder.SearchArchetypes(@cubeId, @cubeView)    
     @searchArchetypes.load =>
       @archetypesBadges = new CubeBuilder.ArchetypesBadges(@cubeId, @searchArchetypes, @cubeView)

@@ -2,10 +2,11 @@ class CubeBuilder.CubeView
 
   constructor: (@cubeId, @wishlistView) ->
 
-  loadCube: (cubeId) ->
+  loadCube: (cubeId, numPlayers) ->
     $.ajax
       method: 'GET'
       url: "cubes/#{cubeId}/view"
+      data: numPlayers: numPlayers
       dataType: "json"
 
   renderCube: (json_response) -> 
@@ -25,8 +26,8 @@ class CubeBuilder.CubeView
     text = HandlebarsTemplates['cube_builder/cube_view'](json_response)
     $('#cube').html text
     
-  render: () ->
-    this.loadCube(@cubeId).done (response) =>
+  render: (numPlayers = 8) ->
+    this.loadCube(@cubeId, numPlayers).done (response) =>
       @cubeView = response
       this.renderCube(@cubeView)
       @wishlistView.addClassInWishlist(@wishlistView.wishlist_ids)

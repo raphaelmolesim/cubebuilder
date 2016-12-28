@@ -33,6 +33,33 @@
 	<div id="card_list" class="col-lg-4 col-md-4 col-sm-4">
 		
 	</div>
+	<div id="filter" class="col-lg-4 col-md-4 col-sm-4">
+
+		<div class="well bs-component">
+			<form id="cube_filter" class="form-horizontal">
+				<fieldset>
+              <legend>Filters</legend>  
+					<div class="form-group">
+			      <label for="card_name" class="col-lg-4 control-label">Number Of Players</label>
+			      <div class="col-lg-6">
+			        <select class="form-control" name="qtd-players" id="qtd-players">
+                <option value="4">4 Players</option>
+                <option value="6">6 Players</option>
+                <option value="8" selected="selected">8 Players</option>
+              </select>
+			      </div>
+			    </div>
+					<div class="form-group">
+			      <div class="col-lg-4 control-label"></div>
+			      <div class="col-lg-6">
+			        <a href="#" id="apply-filter" class="btn btn-primary">Apply</a>
+			      </div>
+			    </div>
+          
+				</fieldset>
+			</form>
+		</div>
+	</div>
 </div>
 <div class="row">
 	<div id="cube">

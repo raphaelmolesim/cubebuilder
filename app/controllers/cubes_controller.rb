@@ -123,7 +123,9 @@ class CubesController < ApplicationController
     repetition = []    
     
     split_cards = []
-    @cube.archetypes.map { |a| a.cards }.flatten.each do |card|
+    query = @cube.archetypes_in_cubes
+    query = query.select { |a| a.cube_players <= params[:numPlayers].to_i } if params[:numPlayers]
+    query.map { |a| a.archetype }.flatten.map { |a| a.cards }.flatten.each do |card|
       next if (repetition.include? card.id)
       
       repetition << card.id      
