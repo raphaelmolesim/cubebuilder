@@ -52,6 +52,7 @@ class CubeBuilder.CardShow
       url: "/card/#{card_id}.json",
       dataType: "json"
     .done (response) => 
+      response["wishlist"] = (response["id"] in @wishlistView.wishlist_ids)
       this.renderCard([response], deleteOption)
 
   renderCard: (cards, deleteOption) ->
@@ -59,6 +60,7 @@ class CubeBuilder.CardShow
     if cards == '' or cards == 'null'
       return $('#card_list').html('Not Found')
     other_cards = cards.filter (c) -> c["id"] != cards[0]["id"]
+    cards[0]["wishlist"] = (cards[0]["id"] in @wishlistView.wishlist_ids)
     self.archetypesBadges.cubeArchetypes (archetypes) => 
       text = HandlebarsTemplates['cube_builder/card_show'](
         card: cards[0],
@@ -95,8 +97,9 @@ class CubeBuilder.CardShow
       dataType: 'json'
     .done (response) =>
       cell = $("a.show_card[data-id=#{card_id}]")
-      @wishlistView.wishlist_ids.push (card_id)
       if (remove)
+        @wishlistView.wishlist_ids = @wishlistView.wishlist_ids.filter (id) -> id != parseInt(card_id)
         cell.removeClass("wishlist")
       else
+        @wishlistView.wishlist_ids.push (card_id)
         cell.addClass("wishlist")    

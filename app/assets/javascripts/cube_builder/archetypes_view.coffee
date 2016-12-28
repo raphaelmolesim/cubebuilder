@@ -12,7 +12,17 @@ class CubeBuilder.ArchetypesView
     @archetypesBadges.cubeArchetypes (archetypes) =>
       archetype = archetypes.filter (archetype) -> archetype.id == archetypeId
       archetype[0].cards.forEach (card) ->
+        
         cell = $("#cube a.show_card[data-id=#{card["id"]}]")
+
+        split_card = card["split_card"]
+        if (split_card)
+          cell = $("#cube a.show_card[data-id='#{card["id"]}##{split_card["id"]}']") 
+        
+        if (cell.length == 0)
+          console.log("Ignoring card --> #{card["name"]} #{split_card["name"]} ")
+          return
+        
         cardName = cell.html()
         cmc = cell.next().html()
         type = cell.data("type")
