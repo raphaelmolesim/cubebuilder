@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161221220755) do
+ActiveRecord::Schema.define(version: 20161226033027) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20161221220755) do
     t.integer  "archetype_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
+    t.integer  "cube_players"
     t.index ["archetype_id"], name: "index_archetypes_in_cubes_on_archetype_id", using: :btree
     t.index ["cube_id"], name: "index_archetypes_in_cubes_on_cube_id", using: :btree
   end
