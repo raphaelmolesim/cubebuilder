@@ -15,8 +15,9 @@ class AssignValueForAllArchetypeInCubes < ActiveRecord::Migration[5.0]
       
       players = (r[item.cube_id].size / 45.0).ceil
       
-      item.cube_players = 4 if players <= 4
-      item.cube_players += 1 if players.odd?
+      players = 4 if players <= 4
+      players += 1 if players.odd?
+      item.cube_players = players
       item.save!
       
       r
