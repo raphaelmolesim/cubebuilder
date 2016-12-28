@@ -1,5 +1,13 @@
 {{#each this }}
- <li class="list-group-item">
-    <span class="badge">{{ cards_count }}</span> <a href="#" class="list-archetype" data-id="{{ id }}">{{ name }}</a> <a href="#" class="remove-archetype" data-id="{{ id }}"></a>
- </li>
+  <h6>{{@key}} Players</h6>
+    <hr>
+	<ul class="list-group col-lg-4 col-md-4 col-sm-4">
+  
+    {{#each this }}
+     <li class="list-group-item">
+        <span class="badge">{{ cards_count }}</span> <a href="#" class="list-archetype" data-id="{{ id }}">{{ name }}</a> <a href="#" class="remove-archetype" data-id="{{ id }}"></a> {{ cube_players }}
+     </li>
+     {{/each}}
+  </ul>   
 {{/each}}
+</li>

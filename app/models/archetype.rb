@@ -13,6 +13,7 @@ class Archetype < ApplicationRecord
       h[:cards_count] = cardsets.size
       h[:cards] = cardsets.map { |s| s.card }
       h[:cube_ids] = cube_ids
+      h[:cubes_config] = archetypes_in_cubes
       h
   end
 

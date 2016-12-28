@@ -1,16 +1,27 @@
 class AssignValueForAllArchetypeInCubes < ActiveRecord::Migration[5.0]
   def change
+    to_delete = []
+    
     archetypesByCube = ArchetypesInCube.all.inject({}) do |r, item|
       r[item.cube_id] ||= []
-      r[item.cube_id] << item
+      
+      begin
+        r[item.cube_id] << Archetype.find(item.archetype_id).cards
+      rescue
+        to_delete << item
+      end
+      r[item.cube_id].flatten!
+      r[item.cube_id].uniq!
+      
+      players = (r[item.cube_id].size / 45.0).ceil
+      
+      item.cube_players = 4 if players <= 4
+      item.cube_players += 1 if  players.odd
+      item.save!
+      
       r
     end
     
-    archetypesByCube.each do |cube_id, archetypes|
-      archetypes.each_with_index do |item, index|
-        item.cube_players = index
-      end
-    end
-    
+    ArchetypesInCube.where(:id => to_delete.map(&:id)).delete_all
   end
 end

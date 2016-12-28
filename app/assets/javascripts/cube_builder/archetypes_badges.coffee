@@ -18,7 +18,13 @@ class CubeBuilder.ArchetypesBadges
       self.renderCubeBadges(archetypes)
     
   renderCubeBadges: (archetypes) ->
-    text = HandlebarsTemplates['cube_builder/archetypes_badges'](archetypes)
+    archetypesByPlayers = {}
+    archetypes.forEach (archetype) =>
+      archetype_config = archetype.cubes_config.filter (config) => config["cube_id"] == @cubeId
+      archetypesByPlayers[archetype.cubes_config[0]["cube_players"]] ||= []
+      archetypesByPlayers[archetype.cubes_config[0]["cube_players"]].push(archetype)
+      
+    text = HandlebarsTemplates['cube_builder/archetypes_badges'](archetypesByPlayers)
     $('#archetypes').html text
   
   removeArchetype: (e) ->

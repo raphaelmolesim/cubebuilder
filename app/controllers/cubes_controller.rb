@@ -57,15 +57,20 @@ class CubesController < ApplicationController
 
   def add_archetype
     respond_to do |format|
-      @cube.archetypes << Archetype.find(params[:archetype_id])
+      archetype = Archetype.find(params[:archetype_id])
+      cards = (@cube.archetypes.map(&:cards) + archetype.cards).flatten.uniq
+      players = (cards.size / 45.0).ceil
+      players = 4 if players < 4
+      players += 1 if players.odd?
       
-      if @cube.save!
-        format.html { redirect_to @cube, notice: 'Cube was successfully updated.' }
-        format.json { render :show, status: :ok, location: @cube }
-      else
-        format.html { render :edit }
-        format.json { render json: @cube.errors, status: :unprocessable_entity }
-      end
+      ArchetypesInCube.create!({
+        cube_id: @cube.id, 
+        archetype_id: archetype.id,
+        cube_players: players
+      })  
+
+      format.html { redirect_to @cube, notice: 'Cube was successfully updated.' }
+      format.json { render :show, status: :ok, location: @cube }
     end
   end
   
