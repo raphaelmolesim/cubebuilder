@@ -1,6 +1,74 @@
-<h1>Editing Cube</h1>
+<div class="row">
+	<div class="col-lg-8 col-md-8 col-sm-8">
+		<div class="well bs-component">
+			<form id="search_card" class="form-horizontal">
+				<fieldset>
+					<div class="form-group">
+			      <label for="card_name" class="col-lg-2 control-label">Card Name</label>
+			      <div class="col-lg-10">
+			        <input type="text" class="form-control" name="card_name" id="card_name">
+			      </div>
+			    </div>
+					<div class="form-group">
+			      <a href="#" id="show_wishlist">See Wishlist</a>
+			      <div class="col-lg-10">			        
+			      </div>
+			    </div>
+				</fieldset>
+			</form>
+		</div>
+   
+    <p>
+    	<h2 style="display:inline">
+        Archetypes
+      </h2>
+      <input id="archetype_search" placeholder="Add Archetype">
+      <input id="archetype_search_id" type="hidden">
+    </p>  
 
-<%= render 'form', cube: @cube %>
+    <div id="archetypes"></div>
+  	
+   
+	</div>
+	<div id="card_list" class="col-lg-4 col-md-4 col-sm-4">
+		
+	</div>
+	<div id="filter" class="col-lg-4 col-md-4 col-sm-4">
 
-<%= link_to 'Show', @cube %> |
-<%= link_to 'Back', cubes_path %>
+		<div class="well bs-component">
+			<form id="cube_filter" class="form-horizontal">
+				<fieldset>
+              <legend>Filters</legend>  
+					<div class="form-group">
+			      <label for="card_name" class="col-lg-4 control-label">Number Of Players</label>
+			      <div class="col-lg-6">
+			        <select class="form-control" name="qtd-players" id="qtd-players">
+                <option value="4">4 Players</option>
+                <option value="6">6 Players</option>
+                <option value="8" selected="selected">8 Players</option>
+              </select>
+			      </div>
+			    </div>
+					<div class="form-group">
+			      <div class="col-lg-4 control-label"></div>
+			      <div class="col-lg-6">
+			        <a href="#" id="apply-filter" class="btn btn-primary">Apply</a>
+			      </div>
+			    </div>
+          
+				</fieldset>
+			</form>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div id="cube">
+	
+	</div>
+</div>
+
+<div class="row" id="dialog"></div>
+
+<span id="cubeId" style="display:none">
+	<%= @cube.id %>
+</span>

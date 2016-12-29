@@ -4,12 +4,7 @@ class ArchetypesController < ApplicationController
   # GET /archetypes
   # GET /archetypes.json
   def index
-    if (params[:all] == "true")
-      @archetypes = Archetype.all
-    else
-      @archetypes = Cube.eager_load(:archetypes_in_cubes).find(session[:cube_id]).archetypes
-    end
-
+    @archetypes = Archetype.where(user_id: current_user.id)
     respond_to do |format|
       format.html { render :index }
       format.json { render json: @archetypes }
@@ -34,6 +29,7 @@ class ArchetypesController < ApplicationController
   # POST /archetypes.json
   def create
     @archetype = Archetype.new(archetype_params)
+    @archetype.user = current_user
 
     respond_to do |format|
       if @archetype.save

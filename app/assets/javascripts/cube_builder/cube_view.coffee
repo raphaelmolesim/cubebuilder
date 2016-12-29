@@ -5,7 +5,7 @@ class CubeBuilder.CubeView
   loadCube: (cubeId, numPlayers) ->
     $.ajax
       method: 'GET'
-      url: "cubes/#{cubeId}/view"
+      url: "/cubes/#{cubeId}/view"
       data: numPlayers: numPlayers
       dataType: "json"
 

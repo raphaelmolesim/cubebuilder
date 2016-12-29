@@ -1,3 +1,35 @@
-// Place all the styles related to the Session controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.none {
+  height: 45px
+}
+
+#notice {
+  margin-top: 50px;
+  padding-left: 115px;
+  .alert {
+    margin-bottom: 0px;
+    color: red;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .notice {
+    margin-bottom: 0px;
+    color: green;
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
+
+ul#links {
+  list-style: none;
+  margin-top:20px;
+  padding-left: 0px;
+  li { 
+    display: inline-block;
+    border-right: 1px solid;
+    padding-right: 5px;
+  }
+  li:last-child {
+    border-right: 0px solid;
+  }
+  
+}

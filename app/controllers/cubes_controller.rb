@@ -1,12 +1,10 @@
 class CubesController < ApplicationController
-  before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype, :view, :remove_archetype]
-
-  skip_before_filter :authenticate
+  before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype, :view, :remove_archetype, :wishlist]
 
   # GET /cubes
   # GET /cubes.json
   def index
-    @cubes = Cube.all
+    @cubes = Cube.where(user_id: current_user.id)
   end
 
   # GET /cubes/1
@@ -27,7 +25,8 @@ class CubesController < ApplicationController
   # POST /cubes.json
   def create
     @cube = Cube.new(cube_params)
-
+    @cube.user = current_user
+    
     respond_to do |format|
       if @cube.save
         format.html { redirect_to @cube, notice: 'Cube was successfully created.' }
@@ -108,7 +107,6 @@ class CubesController < ApplicationController
   end
   
   def wishlist
-    @cube = Cube.find(session[:cube_id])
     wishlist = @cube.wishlists.map(&:card_id)
     respond_to do |format|
       format.json { render json: wishlist, tatus: :ok }
@@ -186,8 +184,7 @@ class CubesController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def cube_params
+    def cube_params      
       params.require(:cube).permit(:name, :password, :cards => [])
-
     end
 end

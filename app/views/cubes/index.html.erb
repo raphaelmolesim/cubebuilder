@@ -1,12 +1,9 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Cubes</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
-      <th>Password</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -15,15 +12,9 @@
     <% @cubes.each do |cube| %>
       <tr>
         <td><%= cube.name %></td>
-        <td><%= cube.password %></td>
-        <td><%= link_to 'Show', cube %></td>
         <td><%= link_to 'Edit', edit_cube_path(cube) %></td>
-        <td><%= link_to 'Destroy', cube, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', cube, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Cube', new_cube_path %>

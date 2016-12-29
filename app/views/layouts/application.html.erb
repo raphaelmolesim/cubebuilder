@@ -20,19 +20,46 @@
         </div>
         <div class="navbar-collapse collapse" id="navbar-main">
           <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="menu-archetype">Archetypes</a>
-              <ul class="dropdown-menu" aria-labelledby="menu-archetype">
-                <li><a href="/archetypes/">Cube Archetypes</a></li>
-                <li><a href="/archetypes?all=true">All Archetype</a></li>
-                <li><a href="/archetypes/new">New Archetype</a></li>
+            <li>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="menu-cubes">
+                Cubes <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="menu-cubes">
+                <li><a href="/cubes">All</a></li>
+                <li><a href="/cubes/new">New</a></li>
               </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="menu-archetype">
+                Archetypes <span class="caret"></span>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="menu-archetype">
+                <li><a href="/archetypes">All</a></li>
+                <li><a href="/archetypes/new">New</a></li>
+              </ul>
+            </li>
+            <li>
+              <% if user_signed_in? %>
+                <li>
+                <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        
+                </li>
+              <% end %>
             </li>
           </ul>
         </div>
       </div>
     </div>
     
+    <div class="container" class="none">
+      
+    </div>
+
+    <div id="notice" class="">
+      
+      <% if notice %><p class="notice"><%= notice %></p><% end %>
+      <% if alert %><p class="alert"><%= alert %></p><% end %>
+    </div>
+
     <div class="main container">
     <%= yield %>
     </div>

@@ -1,8 +1,8 @@
 
 <br><br>
-<div class="col-lg-3"></div>
-<div class="well bs-component col-lg-6">
+<div class="well bs-component col-lg-6 col-lg-offset-3">
 <%= form_for(archetype, html: { class: "form-horizontal" } ) do |f| %>
+  <legend><%= title %></legend>
   <% if archetype.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(archetype.errors.count, "error") %> prohibited this archetype from being saved:</h2>
@@ -18,14 +18,17 @@
   <div class="form-group">
     <%= f.label :name, class: "col-lg-2 control-label" %>
     <div class="col-lg-10">
-      <%= f.text_field :name, class: "form-control", placeholder: "Email" %>
+      <%= f.text_field :name, class: "form-control", placeholder: "Name" %>
     </div>
   </div>
 
 
   <div class="form-group">
     <div class="col-lg-10 col-lg-offset-2">
+      
+      
       <%= f.submit "Submit", class: "btn btn-primary" %>
+      <%= link_to 'Back', archetypes_path, class: "btn btn-default" %>
     </div>
   </div>
 <% end %>

@@ -8,6 +8,10 @@ class Cube < ApplicationRecord
   has_many :archetypes, through: :archetypes_in_cubes
   has_many :archetypes_in_cubes
   
+  belongs_to :user
+  
+  validates_presence_of :user
+  
   def sync_all_cube cube_list
     current_cards = selected_cards.to_a
     

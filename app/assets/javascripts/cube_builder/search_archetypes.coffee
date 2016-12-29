@@ -20,7 +20,6 @@ class CubeBuilder.SearchArchetypes
       $.ajax
         method: 'GET'
         url: '/archetypes.json'
-        data: all : true
       .done (response) ->
         self.allArchetypes = response
         action(self.allArchetypes)

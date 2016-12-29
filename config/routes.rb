@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   get 'session/logout'
   get 'home/row_data'
 
@@ -21,7 +22,7 @@ Rails.application.routes.draw do
 
   get 'card/search'
   get '/card/:id', to: "card#show"
-  root to: 'home#index'
+  root to: 'cubes#index'
   get 'home/restore_LocalStorage'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   

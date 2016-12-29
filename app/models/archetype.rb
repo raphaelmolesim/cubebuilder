@@ -8,6 +8,10 @@ class Archetype < ApplicationRecord
   has_many :cubes, through: :archetypes_in_cubes
   has_many :archetypes_in_cubes
   
+  belongs_to :user
+  
+  validates_presence_of :user
+  
   def as_json(options = { })
       h = super(options)
       h[:cards_count] = cardsets.size
