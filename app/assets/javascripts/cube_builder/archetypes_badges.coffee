@@ -21,9 +21,8 @@ class CubeBuilder.ArchetypesBadges
     archetypesByPlayers = {}
     archetypes.forEach (archetype) =>
       archetype_config = archetype.cubes_config.filter (config) => config["cube_id"] == @cubeId
-      archetypesByPlayers[archetype.cubes_config[0]["cube_players"]] ||= []
-      archetypesByPlayers[archetype.cubes_config[0]["cube_players"]].push(archetype)
-      
+      archetypesByPlayers[archetype_config[0]["cube_players"]] ||= []
+      archetypesByPlayers[archetype_config[0]["cube_players"]].push(archetype)
     text = HandlebarsTemplates['cube_builder/archetypes_badges'](archetypesByPlayers)
     $('#archetypes').html text
   
