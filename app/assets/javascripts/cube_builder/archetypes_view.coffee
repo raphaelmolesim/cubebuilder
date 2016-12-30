@@ -25,7 +25,7 @@ class CubeBuilder.ArchetypesView
         
         cardName = cell.html()
         cmc = cell.next().html()
-        type = cell.data("type")
+        type = cell.data("type").split(",")
         if cmc == undefined
           cmc = 0
         
