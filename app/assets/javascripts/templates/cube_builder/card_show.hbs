@@ -39,8 +39,8 @@
         </ul>
       </div>
 		</h4>
-		<span>{{#each card.types_list }} {{ this }} {{/each}}</span>
-		<p>{{ card.text }} </p>
+		<span><strong>{{#each card.types_list }} {{ this }} {{/each}} - {{#each card.subtypes_list }} {{ this }} {{/each}}</strong></span>
+		<p>{{{ card.text }}} </p>
     {{#if card.power }}<p style="text-align: right">{{ card.power }} / {{ card.toughness }}</p>{{/if}}
     
     

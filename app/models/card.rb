@@ -53,7 +53,10 @@ class Card < ApplicationRecord
   
   def as_json(options = { })
       h = super(options)
+      h[:types_list] = JSON types_list
+      h[:subtypes_list] = JSON subtypes_list if subtypes_list != "null"
       h[:split_card] = split_card
+      h[:text] = text.gsub("\n", "<br>") if text != "null" and text
       h
   end
   
