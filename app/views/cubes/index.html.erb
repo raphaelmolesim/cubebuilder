@@ -1,5 +1,7 @@
 <h1>Cubes</h1>
-
+<% if @cubes.empty? %>
+  Welcome! What about create your first cube now? click <a href="/cubes/new">here</a>.
+<% else %>
 <table class="table">
   <thead>
     <tr>
@@ -18,3 +20,4 @@
     <% end %>
   </tbody>
 </table>
+<% end %>

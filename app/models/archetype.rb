@@ -10,7 +10,7 @@ class Archetype < ApplicationRecord
   
   belongs_to :user
   
-  validates_presence_of :user
+  validates_presence_of :user, :name
   
   def as_json(options = { })
       h = super(options)

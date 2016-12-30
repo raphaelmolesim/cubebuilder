@@ -10,7 +10,7 @@ class Cube < ApplicationRecord
   
   belongs_to :user
   
-  validates_presence_of :user
+  validates_presence_of :user, :name
   
   def sync_all_cube cube_list
     current_cards = selected_cards.to_a
