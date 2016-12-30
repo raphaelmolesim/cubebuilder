@@ -28,6 +28,8 @@ class CubeBuilder.ArchetypesBadges
   
   removeArchetype: (e) ->
     self = this
+    $("#archetypes").html("")
+    $("#archetypes").addClass("loading")
     archetypeId = $(e.target).data("id")
     $.ajax
       method: 'PUT'

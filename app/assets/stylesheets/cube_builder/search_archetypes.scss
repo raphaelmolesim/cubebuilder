@@ -1,5 +1,10 @@
 #archetype_search {
   float:right;
   margin-top: 7px;
-  
+}
+
+.loading{
+  background-image: image-url('box.gif');
+  background-repeat: no-repeat;
+  background-position: center;   
 }

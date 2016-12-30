@@ -17,10 +17,13 @@ class CubeBuilder.SearchArchetypes
   all: (action) ->
     self = this
     if (@allArchetypes == undefined)
+      $("#archetypes").html("")
+      $("#archetypes").addClass("loading")
       $.ajax
         method: 'GET'
         url: '/archetypes.json'
       .done (response) ->
+        $("#archetypes").removeClass("loading")
         self.allArchetypes = response
         action(self.allArchetypes)
     else
@@ -28,6 +31,8 @@ class CubeBuilder.SearchArchetypes
   
   add_archetype: (archetypeId, cubeId) ->
     self = this
+    $("#archetypes").html("")
+    $("#archetypes").addClass("loading")
     $.ajax
       method: 'PUT'
       url: "/cubes/#{cubeId}/add_archetype"
