@@ -1,8 +1,17 @@
-<p>
-  <strong>Name:</strong>
+<h1>
   <%= @cube.name %>
-</p>
+</h1>
 
+<br>
 
-<%= link_to 'Edit', edit_cube_path(@cube) %> |
-<%= link_to 'Back', cubes_path %>
+<div class="row">
+	<div id="cube">
+	
+	</div>
+</div>
+
+<div class="row" id="dialog"></div>
+
+<span id="cubeViewId" style="display:none">
+	<%= @cube.id %>
+</span>

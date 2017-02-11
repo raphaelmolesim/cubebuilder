@@ -30,5 +30,5 @@ class CubeBuilder.CubeView
     this.loadCube(@cubeId, numPlayers).done (response) =>
       @cubeView = response
       this.renderCube(@cubeView)
-      @wishlistView.addClassInWishlist(@wishlistView.wishlist_ids)
+      @wishlistView.addClassInWishlist(@wishlistView.wishlist_ids) if @wishlistView
     

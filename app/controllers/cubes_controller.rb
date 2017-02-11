@@ -1,5 +1,6 @@
 class CubesController < ApplicationController
   before_action :set_cube, only: [:show, :edit, :update, :destroy, :add_archetype, :view, :remove_archetype, :wishlist]
+  before_action :authenticate_user!, except: [ :show, :view ]
 
   # GET /cubes
   # GET /cubes.json

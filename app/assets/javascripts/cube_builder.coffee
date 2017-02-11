@@ -22,8 +22,17 @@ class CubeBuilderApp
       @searchCard = new CubeBuilder.SearchCard(@archetypesBadges, @cardShow)
       
       @archetypesView = new CubeBuilder.ArchetypesView(@archetypesBadges)
+
+class CubeViewApp
+  constructor: (@cubeId) ->
+    @cubeView = new CubeBuilder.CubeView(@cubeId, null)
+    @cubeView.render()
     
 $().ready ->
   cubeId = parseInt($("#cubeId").html())
   if (!isNaN(cubeId))
     cubeBuilder = new CubeBuilderApp(cubeId)
+    
+  cubeViewId = parseInt($("#cubeViewId").html())
+  if (!isNaN(cubeViewId))
+    cubeView = new CubeViewApp(cubeViewId)
